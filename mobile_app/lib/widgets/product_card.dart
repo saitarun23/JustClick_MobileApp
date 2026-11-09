@@ -1,212 +1,158 @@
 import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
-import '../data/cart_controller.dart';
+import '../data/dummy_data.dart';
 import '../models/product.dart';
-import 'product_image.dart';
-/// "ADD" button that turns into a - 1 + stepper.
-class QtyControl extends StatelessWidget {
-  const QtyControl({super.key, required this.product});
-  final Product product;
+import 'add_button.dart';
+import 'net_image.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    final cart = CartController.instance;
-
-    return ListenableBuilder(
-      listenable: cart,
-      builder: (context, _) {
-        final qty = cart.qty(product);
-
-        if (qty == 0) {
-          return InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: () => cart.add(product),
-            child: Container(
-              width: 70,
-              height: 34,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.primarySoft,
-                border: Border.all(color: AppColors.primary),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Text(
-                'ADD',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          );
-        }
-
-        return Container(
-          width: 84,
-          height: 34,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _StepButton(icon: Icons.remove, onTap: () => cart.remove(product)),
-              Text(
-                '$qty',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              _StepButton(icon: Icons.add, onTap: () => cart.add(product)),
-            ],
-          ),
-        );
-      },
+Category categoryOf(String name) => categories.firstWhere(
+      (c) => c.name == name,
+      orElse: () => categories.first,
     );
-  }
-}
 
-class _StepButton extends StatelessWidget {
-  const _StepButton({required this.icon, required this.onTap});
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Icon(icon, size: 18, color: Colors.white),
-      ),
-    );
-  }
-}
-
-/// Card used in the home grid.
-/// Card used in the home grid.
+/// Borderless magazine-style card. Height follows [imageHeight].
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product});
+  const ProductCard({
+    super.key,
+    required this.product,
+    this.imageHeight = 170,
+  });
+
   final Product product;
+  final double imageHeight;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
+    final cat = categoryOf(product.category);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: imageHeight,
+          child: Stack(
             children: [
-              SizedBox(
-                height: 105,
-                width: double.infinity,
-                child: ProductImage(product: product, iconSize: 44),
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(26),
+                  child: NetImage(
+                    url: product.image,
+                    fallbackIcon: cat.icon,
+                    background: cat.color,
+                  ),
+                ),
               ),
               if (product.discount > 0)
                 Positioned(
-                  top: 6,
-                  left: 6,
+                  top: 10,
+                  left: 10,
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                        const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.accent,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      '${product.discount}% OFF',
+                      '${product.discount}% off',
                       style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
                         color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ),
                 ),
+              Positioned(
+                right: 8,
+                bottom: 8,
+                child: AddButton(product: product),
+              ),
             ],
           ),
-          const SizedBox(height: 10),
-          Text(
-            product.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            product.unit,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          const Spacer(),
-          Row(
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '₹${product.price}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
-                      ),
-                    ),
-                    if (product.discount > 0)
-                      Text(
-                        '₹${product.mrp}',
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: AppColors.textSecondary,
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                      ),
-                  ],
+              Text(
+                product.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                  color: AppColors.ink,
                 ),
               ),
-              QtyControl(product: product),
+              const SizedBox(height: 2),
+              Text(
+                product.unit,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Text(
+                    '₹${product.price}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  if (product.discount > 0)
+                    Text(
+                      '₹${product.mrp}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-/// Row-style tile used in the category and cart screens.
-class ProductTile extends StatelessWidget {
-  const ProductTile({super.key, required this.product});
+/// Compact row used in the cart.
+class ProductRow extends StatelessWidget {
+  const ProductRow({super.key, required this.product});
   final Product product;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
-      ),
+    final cat = categoryOf(product.category);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
       child: Row(
         children: [
           SizedBox(
-            height: 64,
-            width: 64,
-            child: ProductImage(product: product, radius: 12, iconSize: 28),
+            height: 76,
+            width: 76,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: NetImage(
+                url: product.image,
+                fallbackIcon: cat.icon,
+                background: cat.color,
+              ),
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +161,11 @@ class ProductTile extends StatelessWidget {
                   product.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    color: AppColors.ink,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -228,13 +178,17 @@ class ProductTile extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   '₹${product.price}',
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
+                    color: AppColors.ink,
+                  ),
                 ),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          QtyControl(product: product),
+          AddButton(product: product),
         ],
       ),
     );

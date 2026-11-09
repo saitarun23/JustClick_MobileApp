@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../navigation/main_shell.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _fade;
-  late final Animation<double> _scale;
+  late final Animation<Offset> _slide;
   Timer? _timer;
 
   @override
@@ -27,26 +28,22 @@ class _SplashScreenState extends State<SplashScreen>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
-    );
+    )..forward();
 
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-    _scale = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.08),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
-    _controller.forward();
-
-    // Go to the main app after 3 seconds.
     _timer = Timer(const Duration(seconds: 3), () {
       if (!mounted) return;
-
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const MainShell(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          pageBuilder: (context, animation, secondary) => const MainShell(),
+          transitionsBuilder: (context, animation, secondary, child) =>
               FadeTransition(opacity: animation, child: child),
         ),
       );
@@ -63,61 +60,54 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: AppColors.primary,
-        body: SafeArea(
-          child: Center(
-            child: FadeTransition(
-              opacity: _fade,
-              child: ScaleTransition(
-                scale: _scale,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 115,
-                      width: 115,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                      child: const Icon(
-                        Icons.shopping_bag_rounded,
-                        size: 65,
-                        color: AppColors.primary,
-                      ),
+        backgroundColor: AppColors.background,
+        body: Center(
+          child: FadeTransition(
+            opacity: _fade,
+            child: SlideTransition(
+              position: _slide,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 96,
+                    width: 96,
+                    decoration: BoxDecoration(
+                      color: AppColors.ink,
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    const SizedBox(height: 25),
-                    const Text(
-                      'JUST CLICK',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 3,
-                      ),
+                    child: const Icon(
+                      Icons.shopping_basket_rounded,
+                      color: Colors.white,
+                      size: 46,
                     ),
-                    const SizedBox(height: 12),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 32),
-                      child: Text(
-                        'Everything you need, just one click away.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
+                  const SizedBox(height: 26),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text('Just Click', style: AppText.display(44)),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 4, bottom: 8),
+                        child: CircleAvatar(
+                          radius: 5,
+                          backgroundColor: AppColors.accent,
+                        ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Fresh at your door in 10 minutes',
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 14,
                     ),
-                    const SizedBox(height: 45),
-                    const SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 2.5,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

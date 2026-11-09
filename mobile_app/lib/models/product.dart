@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 
 class Category {
   final String name;
-  final IconData icon; // fallback if the image is missing or fails
+  final IconData icon;
   final Color color;
-  final String image; // image URL (leave '' to show the icon)
+  final String image;
 
   const Category(this.name, this.icon, this.color, {this.image = ''});
+}
+
+class Promo {
+  final String title;
+  final String subtitle;
+  final Color color;
+  final String image;
+
+  const Promo(this.title, this.subtitle, this.color, {this.image = ''});
 }
 
 class Product {
   final String id;
   final String name;
   final String unit;
-  final String image; // image URL
+  final String image;
   final String category;
   final int price;
   final int mrp;

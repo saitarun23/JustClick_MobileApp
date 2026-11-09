@@ -8,19 +8,28 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       primary: AppColors.primary,
-      surface: AppColors.white,
+      surface: AppColors.background,
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.background,
-      foregroundColor: AppColors.textPrimary,
-      elevation: 0,
-    ),
-    navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: Colors.white,
-      indicatorColor: AppColors.primarySoft,
-      labelTextStyle: WidgetStateProperty.all(
-        const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-      ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: AppColors.ink,
+      contentTextStyle: const TextStyle(color: Colors.white),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
   );
+}
+
+class AppText {
+  /// Big serif headline style used across the app.
+  static TextStyle display(double size, {Color color = AppColors.ink}) {
+    return TextStyle(
+      fontFamily: 'serif',
+      fontFamilyFallback: const ['Georgia', 'Times New Roman'],
+      fontSize: size,
+      fontWeight: FontWeight.w700,
+      height: 1.1,
+      letterSpacing: -0.5,
+      color: color,
+    );
+  }
 }

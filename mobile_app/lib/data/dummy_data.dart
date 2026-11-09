@@ -4,6 +4,18 @@ import '../models/product.dart';
 
 const String _img = 'https://loremflickr.com/400/400';
 
+const List<Promo> promos = [
+  Promo('Fresh from\nthe orchard', 'Fruits in 10 minutes', Color(0xFF2F6B4F),
+          image: 'https://www.google.com/imgres?q=frutis%20all%20products&imgurl=https%3A%2F%2Fimages.contentstack.io%2Fv3%2Fassets%2Fbltcedd8dbd5891265b%2Fbltc68b7ba7fc2156b7%2F665640d9f8aaeaadeabcf466%2Ftypes-of-fuit-hero-1-e1559313304247.jpg%3Fq%3D70%26width%3D3840%26auto%3Dwebp&imgrefurl=https%3A%2F%2Fwww.berries.com%2Farticles%2Ftastes%2Ftypes-of-fruit%3Fsrsltid%3DAYCX9vKN3ENzpf0xipq8tV1neRr4fJLLWfTiJDYsjwyaJS9UYYLBeUVM&docid=Ya_duxuXkmw07M&tbnid=quvocq2p8EIecM&vet=12ahUKEwiP7vD6zPqXAxU3SmwGHRn-E0MQnPAOegQIfBAA..i&w=3840&h=2633&hcb=2&ved=2ahUKEwiP7vD6zPqXAxU3SmwGHRn-E0MQnPAOegQIfBAA',
+),
+  Promo('Dairy days,\nup to 15% off', 'Milk, eggs and more', Color(0xFFE08A3C),
+          image: 'https://www.google.com/imgres?q=milk%20and%20egg%20all%20products&imgurl=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Fcheese-bread-milk-eggs-17775774.jpg&imgrefurl=https%3A%2F%2Fwww.dreamstime.com%2Fphotos-images%2Fmilk-eggs.html&docid=giMbmIUcX7ZCEM&tbnid=8QZBrBuQgQIrOM&vet=12ahUKEwien5LNzfqXAxWWT2wGHaqZBq8QnPAOegQIQRAA..i&w=800&h=532&hcb=2&ved=2ahUKEwien5LNzfqXAxWWT2wGHaqZBq8QnPAOegQIQRAA',
+),
+  Promo('Snack time,\nany time', 'Munchies for every mood', Color(0xFF5B4B8A),
+          image: 'https://www.google.com/imgres?q=chips%20all%20products&imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F71FAUX9wPiL._AC_UF350%2C350_QL80_.jpg&imgrefurl=https%3A%2F%2Fwww.amazon.in%2FLays-Potato-Chips-Indias-Masala%2Fdp%2FB08Q95QQQR&docid=OTD0IcQvFD0cAM&tbnid=sMU9snyR1kgmrM&vet=12ahUKEwjx1JGAzvqXAxXZWHADHUQ5FDYQnPAOegQIZRAA..i&w=350&h=350&hcb=2&ved=2ahUKEwjx1JGAzvqXAxXZWHADHUQ5FDYQnPAOegQIZRAA',
+),
+];
+
 const List<Category> categories = [
   Category('Fruits', Icons.apple, Color(0xFFFDE8E8),
     image: 'https://www.google.com/imgres?q=all%20fruits&imgurl=https%3A%2F%2Fcontentblog.abaenglish.com%2Fwp-content%2Fuploads%2F2021%2F09%2F30162236%2Ffruits-in-english.jpg&imgrefurl=https%3A%2F%2Fblog.abaenglish.com%2Ffruits-in-english%2F&docid=BYJ8qFDli2ujpM&tbnid=V51FvOsIYYaZrM&vet=12ahUKEwiGquSWzvqXAxUnXGcHHaxiKX8QnPAOegQIMhAA..i&w=2049&h=1537&hcb=2&ved=2ahUKEwiGquSWzvqXAxUnXGcHHaxiKX8QnPAOegQIMhAA',
