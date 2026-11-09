@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../data/cart_controller.dart';
 import '../screens/cart/cart_screen.dart';
 import '../screens/categories/categories_screen.dart';
-import '../screens/home/home_screen.dart';
+import '../screens/home/shopping_home_screen.dart';
 import '../widgets/cart_bar.dart';
 
 class MainShell extends StatefulWidget {
@@ -28,7 +28,7 @@ class _MainShellState extends State<MainShell> {
             child: IndexedStack(
               index: _index,
               children: [
-                const HomeScreen(),
+                const ShoppingHomeScreen(),
                 const CategoriesScreen(),
                 CartScreen(onShop: () => _go(0)),
               ],

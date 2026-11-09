@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
 import '../data/cart_controller.dart';
 import '../models/product.dart';
-
+import 'product_image.dart';
 /// "ADD" button that turns into a - 1 + stepper.
 class QtyControl extends StatelessWidget {
   const QtyControl({super.key, required this.product});
@@ -87,6 +87,7 @@ class _StepButton extends StatelessWidget {
 }
 
 /// Card used in the home grid.
+/// Card used in the home grid.
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
   final Product product;
@@ -105,15 +106,10 @@ class ProductCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Container(
+              SizedBox(
                 height: 105,
                 width: double.infinity,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.primarySoft,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Text(product.emoji, style: const TextStyle(fontSize: 54)),
+                child: ProductImage(product: product, iconSize: 44),
               ),
               if (product.discount > 0)
                 Positioned(
@@ -205,15 +201,10 @@ class ProductTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             height: 64,
             width: 64,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.primarySoft,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Text(product.emoji, style: const TextStyle(fontSize: 32)),
+            child: ProductImage(product: product, radius: 12, iconSize: 28),
           ),
           const SizedBox(width: 12),
           Expanded(

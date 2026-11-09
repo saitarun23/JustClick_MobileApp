@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../core/theme/app_colors.dart';
 import '../../data/dummy_data.dart';
 import '../../widgets/product_card.dart';
+import '../../widgets/category_image.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -60,8 +62,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           ),
                           child: Column(
                             children: [
-                              Text(c.emoji,
-                                  style: const TextStyle(fontSize: 28)),
+                              CategoryImage(category: c, size: 44),
                               const SizedBox(height: 4),
                               Text(
                                 c.name,
@@ -82,9 +83,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 Expanded(
                   child: ListView(
                     padding: const EdgeInsets.all(12),
-                    children: [
-                      for (final p in items) ProductTile(product: p),
-                    ],
+                    children: [for (final p in items) ProductTile(product: p)],
                   ),
                 ),
               ],

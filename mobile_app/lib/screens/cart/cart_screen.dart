@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../core/theme/app_colors.dart';
 import '../../data/cart_controller.dart';
 import '../../widgets/product_card.dart';
@@ -20,12 +21,15 @@ class CartScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('🛒', style: TextStyle(fontSize: 70)),
+                  const Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 72,
+                    color: AppColors.textSecondary,
+                  ),
                   const SizedBox(height: 12),
                   const Text(
                     'Your cart is empty',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: 6),
                   const Text(
@@ -53,8 +57,7 @@ class CartScreen extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'My Cart',
-                    style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                   ),
                 ),
               ),
@@ -70,9 +73,23 @@ class CartScreen extends StatelessWidget {
                           color: AppColors.accentSoft,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text(
-                          '🚚 Add ₹$remaining more for free delivery',
-                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.local_shipping_outlined,
+                              size: 20,
+                              color: AppColors.accent,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Add ₹$remaining more for free delivery',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     for (final e in entries) ProductTile(product: e.key),
@@ -99,12 +116,24 @@ class CartScreen extends StatelessWidget {
                           if (cart.savings > 0)
                             Padding(
                               padding: const EdgeInsets.only(top: 8),
-                              child: Text(
-                                '🎉 You saved ₹${cart.savings} on this order',
-                                style: const TextStyle(
-                                  color: AppColors.success,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.savings_outlined,
+                                    size: 18,
+                                    color: AppColors.success,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                    child: Text(
+                                      'You saved ₹${cart.savings} on this order',
+                                      style: const TextStyle(
+                                        color: AppColors.success,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                         ],
@@ -123,7 +152,9 @@ class CartScreen extends StatelessWidget {
                       cart.clear();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Order placed! Arriving in 10 minutes ⚡'),
+                          content: Text(
+                            'Order placed! Arriving in 10 minutes',
+                          ),
                         ),
                       );
                       onShop();
@@ -154,7 +185,10 @@ class CartScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(label, style: style), Text(value, style: style)],
+        children: [
+          Text(label, style: style),
+          Text(value, style: style),
+        ],
       ),
     );
   }
