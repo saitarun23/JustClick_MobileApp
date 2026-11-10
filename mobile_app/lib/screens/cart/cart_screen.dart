@@ -39,7 +39,7 @@ class CartScreen extends StatelessWidget {
                 const SizedBox(height: 18),
                 _deliveryBar(cart.subtotal),
                 const SizedBox(height: 22),
-                for (final e in entries) ProductRow(product: e.key),
+                for (final e in entries) ProductRow(line: e.key),
                 const SizedBox(height: 6),
                 _receipt(cart),
                 const SizedBox(height: 20),

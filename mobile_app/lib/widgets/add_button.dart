@@ -4,8 +4,9 @@ import '../data/cart_controller.dart';
 import '../models/product.dart';
 
 class AddButton extends StatelessWidget {
-  const AddButton({super.key, required this.product});
+  const AddButton({super.key, required this.product, this.variant});
   final Product product;
+  final Variant? variant;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class AddButton extends StatelessWidget {
     return ListenableBuilder(
       listenable: cart,
       builder: (context, _) {
-        final qty = cart.qty(product);
+        final qty = cart.qty(product, variant);
 
         return AnimatedSize(
           duration: const Duration(milliseconds: 180),
@@ -22,7 +23,7 @@ class AddButton extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: qty == 0
               ? GestureDetector(
-                  onTap: () => cart.add(product),
+                  onTap: () => cart.add(product, variant),
                   child: Container(
                     height: 40,
                     width: 40,
@@ -59,7 +60,7 @@ class AddButton extends StatelessWidget {
                     children: [
                       _Step(
                         icon: Icons.remove,
-                        onTap: () => cart.remove(product),
+                        onTap: () => cart.remove(product, variant),
                       ),
                       Text(
                         '$qty',
@@ -69,7 +70,10 @@ class AddButton extends StatelessWidget {
                           fontSize: 15,
                         ),
                       ),
-                      _Step(icon: Icons.add, onTap: () => cart.add(product)),
+                      _Step(
+                        icon: Icons.add,
+                        onTap: () => cart.add(product, variant),
+                      ),
                     ],
                   ),
                 ),
