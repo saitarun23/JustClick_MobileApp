@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
+
 import '../models/product.dart';
 
-/// One basket line = a product in one specific size/variant.
+/// One product in one pack size.
 class CartLine {
-  const CartLine(this.product, this.variant);
   final Product product;
   final Variant variant;
+
+  const CartLine(this.product, this.variant);
 
   @override
   bool operator ==(Object other) =>
@@ -25,9 +27,12 @@ class CartController extends ChangeNotifier {
 
   Map<CartLine, int> get items => Map.unmodifiable(_items);
 
-  /// With a variant: quantity of that size. Without: total of the product.
+  Variant _defaultOf(Product p) => p.options.first;
+
+  /// Quantity of one size. With no size given, the total across all sizes.
   int qty(Product p, [Variant? v]) {
     if (v != null) return _items[CartLine(p, v)] ?? 0;
+
     var total = 0;
     for (final e in _items.entries) {
       if (e.key.product.id == p.id) total += e.value;
@@ -41,7 +46,9 @@ class CartController extends ChangeNotifier {
       _items.entries.fold(0, (s, e) => s + e.key.variant.price * e.value);
 
   int get savings => _items.entries.fold(
-      0, (s, e) => s + (e.key.variant.mrp - e.key.variant.price) * e.value);
+        0,
+        (s, e) => s + (e.key.variant.mrp - e.key.variant.price) * e.value,
+      );
 
   int get deliveryFee => (subtotal == 0 || subtotal >= 199) ? 0 : 25;
 
@@ -49,24 +56,32 @@ class CartController extends ChangeNotifier {
 
   int get total => subtotal + deliveryFee + handlingFee;
 
+  /// With no size given, the standard pack is added.
   void add(Product p, [Variant? v]) {
-    final line = CartLine(p, v ?? p.defaultVariant);
+    final line = CartLine(p, v ?? _defaultOf(p));
     _items[line] = (_items[line] ?? 0) + 1;
     notifyListeners();
   }
 
   void remove(Product p, [Variant? v]) {
     CartLine? line;
+
     if (v != null) {
       line = CartLine(p, v);
     } else {
-      for (final k in _items.keys) {
-        if (k.product.id == p.id) {
-          line = k;
-          break;
+      final standard = CartLine(p, _defaultOf(p));
+      if (_items.containsKey(standard)) {
+        line = standard;
+      } else {
+        for (final k in _items.keys) {
+          if (k.product.id == p.id) {
+            line = k;
+            break;
+          }
         }
       }
     }
+
     if (line == null || !_items.containsKey(line)) return;
 
     final current = _items[line]!;

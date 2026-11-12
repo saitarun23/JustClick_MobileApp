@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_theme.dart';
 import '../data/cart_controller.dart';
 import '../models/product.dart';
 
+/// Round "+" sticker that grows into a "- 2 +" pill.
+/// Pass [variant] for one specific size, or leave it out for the standard one.
 class AddButton extends StatelessWidget {
   const AddButton({super.key, required this.product, this.variant});
+
   final Product product;
   final Variant? variant;
 
@@ -25,53 +30,40 @@ class AddButton extends StatelessWidget {
               ? GestureDetector(
                   onTap: () => cart.add(product, variant),
                   child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      color: AppColors.ink,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x33000000),
-                          blurRadius: 8,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(Icons.add, color: Colors.white, size: 22),
+                    height: 38,
+                    width: 38,
+                    decoration:
+                        AppDeco.circle(color: AppColors.accent, shadow: 2),
+                    child: const Icon(Icons.add_rounded,
+                        color: AppColors.ink, size: 22),
                   ),
                 )
               : Container(
-                  height: 40,
-                  width: 108,
-                  decoration: BoxDecoration(
-                    color: AppColors.ink,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x33000000),
-                        blurRadius: 8,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
+                  height: 38,
+                  width: 104,
+                  decoration: AppDeco.sticker(
+                    color: AppColors.sun,
+                    radius: 19,
+                    shadow: 2,
+                    border: 2,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _Step(
-                        icon: Icons.remove,
+                        icon: Icons.remove_rounded,
                         onTap: () => cart.remove(product, variant),
                       ),
                       Text(
                         '$qty',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.ink,
                           fontWeight: FontWeight.w800,
                           fontSize: 15,
                         ),
                       ),
                       _Step(
-                        icon: Icons.add,
+                        icon: Icons.add_rounded,
                         onTap: () => cart.add(product, variant),
                       ),
                     ],
@@ -94,9 +86,9 @@ class _Step extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: SizedBox(
-        width: 36,
-        height: 40,
-        child: Icon(icon, color: Colors.white, size: 18),
+        width: 34,
+        height: 38,
+        child: Icon(icon, color: AppColors.ink, size: 19),
       ),
     );
   }

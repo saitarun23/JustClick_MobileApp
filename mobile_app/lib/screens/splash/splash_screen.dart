@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('Just Click', style: AppText.display(44)),
+                      Text('pureO', style: AppText.display(44)),
                       const Padding(
                         padding: EdgeInsets.only(left: 4, bottom: 8),
                         child: CircleAvatar(
@@ -100,13 +100,13 @@ class _SplashScreenState extends State<SplashScreen>
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    'Fresh at your door in 10 minutes',
-                    style: TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 14,
-                    ),
-                  ),
+                  // const Text(
+                  //   'Fresh at your door in 10 minutes',
+                  //   style: TextStyle(
+                  //     color: AppColors.textSecondary,
+                  //     fontSize: 14,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

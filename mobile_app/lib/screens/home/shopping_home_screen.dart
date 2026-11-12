@@ -9,6 +9,7 @@ import '../../data/dummy_data.dart';
 import '../../data/subscription_controller.dart';
 import '../../models/product.dart';
 import '../../widgets/manage_delivery_sheet.dart';
+import '../../widgets/mascot.dart';
 import '../../widgets/net_image.dart';
 import '../../widgets/product_actions.dart';
 import '../../widgets/product_card.dart';
@@ -20,6 +21,13 @@ const _monthNames = [
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
 const _quickSearches = ['Milk', 'Eggs', 'Cheese', 'Bread', 'Apples'];
+const _chipColors = [
+  AppColors.sky,
+  AppColors.pink,
+  AppColors.mint,
+  AppColors.sun,
+  AppColors.lilac,
+];
 
 class ShoppingHomeScreen extends StatefulWidget {
   const ShoppingHomeScreen({super.key});
@@ -43,15 +51,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Auto-slide the product showcase while the customer has no plan yet.
+    // Auto-slide the product showcase.
     _timer = Timer.periodic(const Duration(seconds: 4), (_) {
       final count = products.where(canSubscribe).length;
-      if (!mounted ||
-          SubscriptionController.instance.hasAny ||
-          count == 0 ||
-          !_showcaseCtrl.hasClients) {
-        return;
-      }
+      if (!mounted || count == 0 || !_showcaseCtrl.hasClients) return;
       _showcaseCtrl.animateToPage(
         (_showPage + 1) % count,
         duration: const Duration(milliseconds: 500),
@@ -71,12 +74,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
 
   void _scrollToEssentials() {
     final ctx = _essentialsKey.currentContext;
-    if (ctx == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You have added all daily products.')),
-      );
-      return;
-    }
+    if (ctx == null) return;
     Scrollable.ensureVisible(
       ctx,
       duration: const Duration(milliseconds: 450),
@@ -122,11 +120,11 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                     for (final a in const [100, 200, 500])
                       ActionChip(
                         label: Text('+ ₹$a'),
-                        backgroundColor: AppColors.primarySoft,
-                        side: BorderSide.none,
+                        backgroundColor: AppColors.sun,
+                        side: const BorderSide(color: AppColors.ink, width: 2),
                         labelStyle: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primary,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.ink,
                         ),
                         onPressed: () => subs.addMoney(a),
                       ),
@@ -145,7 +143,6 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final top = MediaQuery.of(context).padding.top;
-    final subs = SubscriptionController.instance;
     final searching = _query.isNotEmpty;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -153,36 +150,55 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         padding: EdgeInsets.only(top: top + 12, bottom: 130),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            _topBar(),
-            const SizedBox(height: 18),
-            _searchBar(),
-            const SizedBox(height: 12),
-            _quickChips(),
-            const SizedBox(height: 22),
-            if (searching)
-              _results()
-            else ...[
-              _hero(),
-              const SizedBox(height: 28),
-              ListenableBuilder(
-                listenable: subs,
-                builder: (context, _) => _addMoreSection(),
+            Positioned(top: -10, right: -40, child: _blob(AppColors.pink, 150)),
+            Positioned(top: 330, left: -60, child: _blob(AppColors.sky, 130)),
+            SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _topBar(),
+                  const SizedBox(height: 18),
+                  _searchBar(),
+                  const SizedBox(height: 10),
+                  _quickChips(),
+                  const SizedBox(height: 18),
+                  if (searching)
+                    _results()
+                  else ...[
+                    _mooRow(),
+                    const SizedBox(height: 24),
+                    _hero(),
+                    const SizedBox(height: 26),
+                    _categoryRow(),
+                    const SizedBox(height: 26),
+                    _picksSection(),
+                    const SizedBox(height: 26),
+                    _promiseCard(),
+                  ],
+                ],
               ),
-              _categoryRow(),
-              const SizedBox(height: 28),
-              _picksSection(),
-              const SizedBox(height: 28),
-              _promiseCard(),
-            ],
+            ),
           ],
         ),
       ),
     );
   }
 
+  Widget _blob(Color color, double size) {
+    return Opacity(
+      opacity: 0.55,
+      child: Container(
+        height: size,
+        width: size,
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      ),
+    );
+  }
+
+  /// Section heading with a yellow highlighter strip.
   Widget _title(String text, {String? sub, Key? key}) {
     return Padding(
       key: key,
@@ -190,7 +206,26 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Expanded(child: Text(text, style: AppText.display(23))),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.transparent,
+                    AppColors.sun,
+                    AppColors.sun,
+                  ],
+                  stops: [0, 0.62, 0.62, 1],
+                ),
+              ),
+              child: Text(text, style: AppText.display(23)),
+            ),
+          ),
+          const Spacer(),
           if (sub != null)
             Text(
               sub,
@@ -210,20 +245,17 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
     final subs = SubscriptionController.instance;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.fromLTRB(20, 0, 24, 4),
       child: Row(
         children: [
           Container(
             height: 44,
             width: 44,
-            decoration: const BoxDecoration(
-              color: AppColors.primarySoft,
-              shape: BoxShape.circle,
-            ),
+            decoration: AppDeco.circle(color: AppColors.sun, shadow: 3),
             child: const Icon(Icons.location_on_rounded,
-                color: AppColors.primary, size: 22),
+                color: AppColors.ink, size: 22),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +266,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                       'Home',
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
-                        fontSize: 16,
+                        fontSize: 17,
                       ),
                     ),
                     Icon(Icons.keyboard_arrow_down_rounded, size: 20),
@@ -256,21 +288,22 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
               valueListenable: subs.wallet,
               builder: (context, balance, _) => Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                decoration: BoxDecoration(
-                  color: AppColors.ink,
-                  borderRadius: BorderRadius.circular(22),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                decoration: AppDeco.sticker(
+                  color: AppColors.accent,
+                  radius: 20,
+                  shadow: 3,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.account_balance_wallet_outlined,
-                        color: Colors.white, size: 17),
+                        color: AppColors.ink, size: 17),
                     const SizedBox(width: 6),
                     Text(
                       '₹$balance',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.ink,
                         fontWeight: FontWeight.w800,
                         fontSize: 13,
                       ),
@@ -280,15 +313,11 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
           Container(
             height: 40,
             width: 40,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.border),
-            ),
+            decoration: AppDeco.circle(shadow: 3),
             child: const Icon(Icons.notifications_none_rounded,
                 size: 21, color: AppColors.ink),
           ),
@@ -301,21 +330,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
 
   Widget _searchBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.fromLTRB(20, 0, 24, 4),
       child: Container(
         height: 54,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.border),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x0F000000),
-              blurRadius: 14,
-              offset: Offset(0, 6),
-            ),
-          ],
-        ),
+        decoration: AppDeco.sticker(radius: 18, shadow: 3),
         child: Row(
           children: [
             const SizedBox(width: 16),
@@ -344,7 +362,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                 child: const Padding(
                   padding: EdgeInsets.all(14),
                   child: Icon(Icons.close_rounded,
-                      size: 20, color: AppColors.textSecondary),
+                      size: 20, color: AppColors.ink),
                 ),
               )
             else
@@ -361,40 +379,33 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
 
   Widget _quickChips() {
     return SizedBox(
-      height: 36,
+      height: 44,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.fromLTRB(20, 4, 20, 6),
         children: [
-          for (final q in _quickSearches)
+          for (var i = 0; i < _quickSearches.length; i++)
             GestureDetector(
               onTap: () {
-                _searchCtrl.text = q;
-                setState(() => _query = q);
+                _searchCtrl.text = _quickSearches[i];
+                setState(() => _query = _quickSearches[i]);
               },
               child: Container(
-                margin: const EdgeInsets.only(right: 8),
+                margin: const EdgeInsets.only(right: 12),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: AppColors.border),
+                decoration: AppDeco.sticker(
+                  color: _chipColors[i % _chipColors.length],
+                  radius: 16,
+                  shadow: 2,
+                  border: 2,
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.north_west_rounded,
-                        size: 13, color: AppColors.textSecondary),
-                    const SizedBox(width: 5),
-                    Text(
-                      q,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  _quickSearches[i],
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),
@@ -432,13 +443,9 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
     final cat = categoryOf(p.category);
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+      margin: const EdgeInsets.fromLTRB(20, 0, 24, 14),
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.border),
-      ),
+      decoration: AppDeco.sticker(radius: 24, shadow: 4),
       child: Column(
         children: [
           Row(
@@ -447,7 +454,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                 height: 76,
                 width: 76,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(16),
                   child: NetImage(
                     url: p.image,
                     fallbackIcon: cat.icon,
@@ -496,38 +503,149 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
     );
   }
 
+  // -------------------------------------------------------------------- MOO
+
+  Widget _mooRow() {
+    final subs = SubscriptionController.instance;
+
+    return ListenableBuilder(
+      listenable: subs,
+      builder: (context, _) {
+        final now = DateTime.now();
+        final tomorrow = DateTime(now.year, now.month, now.day + 1);
+        final going = subs
+            .entriesOn(tomorrow)
+            .where((e) => e.status == DeliveryStatus.scheduled)
+            .length;
+
+        final String line;
+        if (!subs.hasAny) {
+          line = 'Moo! Pick a daily plan and I will bring fresh milk every '
+              'morning.';
+        } else if (subs.isPaused(tomorrow)) {
+          line = 'Holiday mode is on. Tomorrow is a day off!';
+        } else if (going == 0) {
+          line = 'Nothing arrives tomorrow. Enjoy your day!';
+        } else {
+          line = '$going item${going == 1 ? '' : 's'} arriving tomorrow. '
+              'Plans changed? Tap an item to skip it.';
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const MooMascot(size: 76),
+              const SizedBox(width: 14),
+              Expanded(child: _bubble(line)),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _bubble(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 4, bottom: 4),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: AppDeco.sticker(radius: 20, shadow: 3),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                height: 1.3,
+              ),
+            ),
+          ),
+          Positioned(
+            left: -8,
+            top: 24,
+            child: Transform.rotate(
+              angle: 0.785398,
+              child: Container(
+                height: 13,
+                width: 13,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    left: BorderSide(color: AppColors.ink, width: 2.2),
+                    bottom: BorderSide(color: AppColors.ink, width: 2.2),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   // ------------------------------------------------------------------- HERO
 
-  /// Product showcase until the first subscription, then the delivery card.
+  /// Delivery card on top (only once you have a plan) and the swipeable
+  /// subscribe cards underneath, always.
   Widget _hero() {
     final subs = SubscriptionController.instance;
 
     return ListenableBuilder(
       listenable: subs,
-      builder: (context, _) => SizedBox(
-        width: double.infinity,
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 350),
-          child: subs.hasAny ? _deliveryCard() : _showcase(),
-        ),
-      ),
+      builder: (context, _) {
+        final hasPlan = subs.hasAny;
+
+        return SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AnimatedSize(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: hasPlan
+                      ? Column(
+                          children: [
+                            _deliveryCard(),
+                            const SizedBox(height: 26),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ),
+              _showcase(hasPlan),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  // ------------------------------------------------------ HERO: PRODUCT SHOWCASE
+  // ------------------------------------------------------ PRODUCT SHOWCASE
 
-  Widget _showcase() {
+  Widget _showcase(bool hasPlan) {
     final items = products.where(canSubscribe).toList();
-    if (items.isEmpty) return const SizedBox.shrink(key: ValueKey('showcase'));
+    if (items.isEmpty) return const SizedBox.shrink();
 
     return Column(
-      key: const ValueKey('showcase'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _title('Start a daily plan', sub: 'Swipe to explore'),
+        _title(
+          hasPlan ? 'Add more to your plan' : 'Start a daily plan',
+          sub: 'Swipe to explore',
+          key: _essentialsKey,
+        ),
         const SizedBox(height: 14),
         SizedBox(
-          height: 250,
+          height: 266,
           child: PageView.builder(
             controller: _showcaseCtrl,
             itemCount: items.length,
@@ -535,7 +653,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
             itemBuilder: (context, i) => _showcaseCard(items[i], i),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
@@ -543,12 +661,12 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
             (i) => AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               margin: const EdgeInsets.symmetric(horizontal: 3),
-              height: 7,
-              width: i == _showPage ? 22 : 7,
+              height: 8,
+              width: i == _showPage ? 24 : 8,
               decoration: BoxDecoration(
-                color:
-                    i == _showPage ? AppColors.ink : const Color(0xFFD9D2C3),
+                color: i == _showPage ? AppColors.accent : Colors.white,
                 borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: AppColors.ink, width: 1.6),
               ),
             ),
           ),
@@ -559,6 +677,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
 
   Widget _showcaseCard(Product p, int i) {
     final cat = categoryOf(p.category);
+    final on = SubscriptionController.instance.has(p);
 
     return AnimatedScale(
       scale: i == _showPage ? 1 : 0.94,
@@ -567,9 +686,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       child: GestureDetector(
         onTap: () => showSubscribeSheet(context, p),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 6),
+          margin: const EdgeInsets.fromLTRB(6, 2, 12, 12),
+          decoration: AppDeco.sticker(radius: 30, shadow: 5),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(27),
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -588,19 +708,21 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 16,
-                  left: 16,
+                  top: 14,
+                  left: 14,
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: const Color(0x40FFFFFF),
-                      borderRadius: BorderRadius.circular(12),
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: AppDeco.sticker(
+                      color: AppColors.sun,
+                      radius: 12,
+                      shadow: 2,
+                      border: 2,
                     ),
                     child: Text(
                       p.category.toUpperCase(),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.ink,
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.8,
@@ -609,9 +731,9 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                   ),
                 ),
                 Positioned(
-                  left: 18,
+                  left: 16,
                   right: 14,
-                  bottom: 18,
+                  bottom: 16,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -641,17 +763,30 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 14, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: AppColors.accent,
-                          borderRadius: BorderRadius.circular(20),
+                        decoration: AppDeco.sticker(
+                          color: on ? AppColors.mint : AppColors.accent,
+                          radius: 18,
+                          shadow: 2,
+                          border: 2,
                         ),
-                        child: const Text(
-                          'Subscribe',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 12,
-                          ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (on)
+                              const Padding(
+                                padding: EdgeInsets.only(right: 4),
+                                child: Icon(Icons.check_rounded,
+                                    size: 14, color: AppColors.ink),
+                              ),
+                            Text(
+                              on ? 'Subscribed' : 'Subscribe',
+                              style: const TextStyle(
+                                color: AppColors.ink,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -674,18 +809,14 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       7,
       (i) => DateTime(now.year, now.month, now.day + 1 + i),
     );
-    final pause = subs.pause;
+    final ranges = subs.pauseRanges;
 
     return Padding(
       key: const ValueKey('delivery'),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.fromLTRB(20, 0, 25, 6),
       child: Container(
-        padding: const EdgeInsets.fromLTRB(18, 16, 18, 10),
-        decoration: BoxDecoration(
-          color: AppColors.primarySoft,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: const Color(0xFFD3E4D8)),
-        ),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+        decoration: AppDeco.sticker(color: AppColors.mint, radius: 30, shadow: 5),
         child: Column(
           children: [
             Row(
@@ -698,10 +829,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                       const SizedBox(height: 2),
                       const Text(
                         'Tap an item to skip or change it',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: TextStyle(fontSize: 11),
                       ),
                     ],
                   ),
@@ -715,7 +843,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                     );
                   }
                 }),
-                const SizedBox(width: 8),
+                const SizedBox(width: 10),
                 _arrow(Icons.chevron_right_rounded, () {
                   if (_dayCtrl.hasClients && _dayPage < days.length - 1) {
                     _dayCtrl.animateToPage(
@@ -728,9 +856,9 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            if (pause != null) _pauseBanner(pause),
+            if (ranges.isNotEmpty) _pauseBanner(ranges),
             SizedBox(
-              height: 128,
+              height: 124,
               child: PageView.builder(
                 controller: _dayCtrl,
                 itemCount: days.length,
@@ -740,40 +868,63 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 6),
+              padding: const EdgeInsets.only(top: 12, bottom: 4),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: _scrollToEssentials,
-                    child: const Text(
-                      'Add more items',
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.primary,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: AppDeco.sticker(
+                        radius: 14,
+                        shadow: 2,
+                        border: 2,
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.add_rounded,
+                              size: 16, color: AppColors.ink),
+                          SizedBox(width: 4),
+                          Text(
+                            'Add items',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () => pickPause(context),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.flight_takeoff_rounded,
-                            size: 16, color: AppColors.primary),
-                        SizedBox(width: 4),
-                        Text(
-                          'Going away?',
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: AppDeco.sticker(
+                        color: AppColors.sun,
+                        radius: 14,
+                        shadow: 2,
+                        border: 2,
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.flight_takeoff_rounded,
+                              size: 16, color: AppColors.ink),
+                          SizedBox(width: 4),
+                          Text(
+                            'Going away?',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -791,10 +942,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       child: Container(
         height: 34,
         width: 34,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
+        decoration: AppDeco.circle(shadow: 2, border: 2),
         child: Icon(icon, size: 22, color: AppColors.ink),
       ),
     );
@@ -802,36 +950,52 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
 
   String _short(DateTime d) => '${d.day} ${_monthNames[d.month - 1]}';
 
-  Widget _pauseBanner(DateTimeRange r) {
+  String _rangeText(DateTimeRange r) {
+    final s = r.start;
+    final e = r.end;
+    if (s == e) return _short(s);
+    if (s.month == e.month) {
+      return '${s.day}–${e.day} ${_monthNames[e.month - 1]}';
+    }
+    return '${_short(s)} – ${_short(e)}';
+  }
+
+  Widget _pauseBanner(List<DateTimeRange> ranges) {
+    final text = ranges.map(_rangeText).join(', ');
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 14, right: 3),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-      decoration: BoxDecoration(
-        color: AppColors.accentSoft,
-        borderRadius: BorderRadius.circular(14),
+      decoration: AppDeco.sticker(
+        color: AppColors.sun,
+        radius: 14,
+        shadow: 2,
+        border: 2,
       ),
       child: Row(
         children: [
           const Icon(Icons.flight_takeoff_rounded,
-              size: 18, color: AppColors.accent),
+              size: 18, color: AppColors.ink),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Paused ${_short(r.start)} to ${_short(r.end)}',
+              'Holiday: $text',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
                 fontSize: 12,
               ),
             ),
           ),
           GestureDetector(
-            onTap: SubscriptionController.instance.resumeAll,
+            onTap: () => pickPause(context),
             child: const Text(
-              'Resume',
+              'Edit',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 12,
-                color: AppColors.primary,
+                decoration: TextDecoration.underline,
               ),
             ),
           ),
@@ -850,28 +1014,22 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
           '$label · ${d.day} ${_monthNames[d.month - 1]}',
           style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         if (entries.isEmpty)
           Row(
             children: [
               Container(
                 height: 52,
                 width: 52,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
+                decoration: AppDeco.circle(shadow: 2, border: 2),
                 child: const Icon(Icons.event_busy_outlined,
-                    color: AppColors.primary),
+                    color: AppColors.ink),
               ),
               const SizedBox(width: 12),
               const Expanded(
                 child: Text(
                   'No delivery planned for this day.',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(fontSize: 12),
                 ),
               ),
             ],
@@ -882,7 +1040,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: entries.length,
-              separatorBuilder: (context, k) => const SizedBox(width: 12),
+              separatorBuilder: (context, k) => const SizedBox(width: 10),
               itemBuilder: (context, k) => _entryTile(d, entries[k]),
             ),
           ),
@@ -903,31 +1061,36 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
     };
     final bubbleColor = switch (e.status) {
       DeliveryStatus.scheduled => AppColors.accent,
-      DeliveryStatus.skipped => const Color(0xFF8A8F89),
-      DeliveryStatus.paused => AppColors.accent,
+      DeliveryStatus.skipped => const Color(0xFFE0DED6),
+      DeliveryStatus.paused => AppColors.sun,
     };
 
     return GestureDetector(
       onTap: () => showManageDeliverySheet(context, s, d),
       child: SizedBox(
-        width: 70,
+        width: 76,
         child: Column(
           children: [
             SizedBox(
-              height: 68,
-              width: 70,
+              height: 70,
+              width: 76,
               child: Stack(
                 children: [
                   Positioned(
                     left: 0,
-                    bottom: 0,
+                    bottom: 3,
                     child: Opacity(
-                      opacity: dim ? 0.45 : 1,
-                      child: SizedBox(
-                        height: 62,
-                        width: 62,
+                      opacity: dim ? 0.5 : 1,
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        decoration: AppDeco.sticker(
+                          radius: 18,
+                          shadow: 2,
+                          border: 2,
+                        ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: BorderRadius.circular(15),
                           child: NetImage(
                             url: s.product.image,
                             fallbackIcon: cat.icon,
@@ -943,14 +1106,16 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
+                      decoration: AppDeco.sticker(
                         color: bubbleColor,
-                        borderRadius: BorderRadius.circular(10),
+                        radius: 10,
+                        shadow: 1.5,
+                        border: 1.6,
                       ),
                       child: Text(
                         label,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.ink,
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
                         ),
@@ -959,15 +1124,12 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                   ),
                   if (locked)
                     Positioned(
-                      left: 4,
-                      bottom: 4,
+                      left: 3,
+                      bottom: 6,
                       child: Container(
                         height: 20,
                         width: 20,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
+                        decoration: AppDeco.circle(shadow: 0, border: 1.6),
                         child: const Icon(Icons.lock_outline_rounded,
                             size: 12, color: AppColors.ink),
                       ),
@@ -975,130 +1137,14 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 4),
             Text(
               s.product.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // --------------------------------------------------------- ADD MORE (rail)
-
-  Widget _addMoreSection() {
-    final subs = SubscriptionController.instance;
-    if (!subs.hasAny) return const SizedBox.shrink();
-
-    final items =
-        products.where((p) => canSubscribe(p) && !subs.has(p)).toList();
-    if (items.isEmpty) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _title('Add to your mornings',
-            sub: 'More daily picks', key: _essentialsKey),
-        const SizedBox(height: 14),
-        SizedBox(
-          height: 172,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemCount: items.length,
-            separatorBuilder: (context, i) => const SizedBox(width: 12),
-            itemBuilder: (context, i) => _essentialCard(items[i]),
-          ),
-        ),
-        const SizedBox(height: 28),
-      ],
-    );
-  }
-
-  Widget _essentialCard(Product p) {
-    final cat = categoryOf(p.category);
-
-    return Container(
-      width: 300,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: NetImage(
-                    url: p.image,
-                    fallbackIcon: cat.icon,
-                    background: cat.color,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      p.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      p.unit,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(
-                          '₹${p.price}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 17,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        if (p.discount > 0)
-                          Text(
-                            '₹${p.mrp}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.textSecondary,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          ProductActions(product: p),
-        ],
       ),
     );
   }
@@ -1114,18 +1160,44 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(
-                child: Text('Shop by category', style: AppText.display(23)),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                        AppColors.sun,
+                        AppColors.sun,
+                      ],
+                      stops: [0, 0.62, 0.62, 1],
+                    ),
+                  ),
+                  child: Text('Shop by category', style: AppText.display(23)),
+                ),
               ),
+              const Spacer(),
               if (_selectedCategory != null)
                 GestureDetector(
                   onTap: () => setState(() => _selectedCategory = null),
-                  child: const Text(
-                    'Show all',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 5),
+                    decoration: AppDeco.sticker(
+                      color: AppColors.pink,
+                      radius: 12,
+                      shadow: 2,
+                      border: 2,
+                    ),
+                    child: const Text(
+                      'Show all',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -1134,10 +1206,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
         ),
         const SizedBox(height: 14),
         SizedBox(
-          height: 186,
+          height: 204,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 17),
+            padding: const EdgeInsets.fromLTRB(20, 4, 12, 0),
             children: [for (final c in categories) _categoryCard(c)],
           ),
         ),
@@ -1153,20 +1225,17 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       onTap: () => setState(
         () => _selectedCategory = selected ? null : c.name,
       ),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+      child: Container(
         width: 132,
-        margin: const EdgeInsets.only(right: 9),
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          border: Border.all(
-            color: selected ? AppColors.accent : Colors.transparent,
-            width: 2.5,
-          ),
+        margin: const EdgeInsets.only(right: 14, bottom: 10),
+        decoration: AppDeco.sticker(
+          color: c.color,
+          radius: 28,
+          shadow: 4,
+          shadowColor: selected ? AppColors.accent : AppColors.ink,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(25.5),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -1190,10 +1259,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                 child: Container(
                   height: 36,
                   width: 36,
-                  decoration: const BoxDecoration(
-                    color: Color(0xE6FFFFFF),
-                    shape: BoxShape.circle,
-                  ),
+                  decoration: AppDeco.circle(shadow: 2, border: 2),
                   child: Icon(c.icon, size: 18, color: AppColors.ink),
                 ),
               ),
@@ -1202,14 +1268,15 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                   top: 10,
                   right: 10,
                   child: Container(
-                    height: 26,
-                    width: 26,
-                    decoration: const BoxDecoration(
+                    height: 28,
+                    width: 28,
+                    decoration: AppDeco.circle(
                       color: AppColors.accent,
-                      shape: BoxShape.circle,
+                      shadow: 0,
+                      border: 2,
                     ),
                     child: const Icon(Icons.check_rounded,
-                        size: 16, color: Colors.white),
+                        size: 16, color: AppColors.ink),
                   ),
                 ),
               Positioned(
@@ -1224,7 +1291,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
                       c.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppText.display(17, color: Colors.white),
+                      style: AppText.display(18, color: Colors.white),
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -1259,15 +1326,18 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
             sub: '${items.length} items'),
         const SizedBox(height: 14),
         SizedBox(
-          height: 250,
+          height: 256,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.fromLTRB(20, 4, 12, 0),
             itemCount: items.length,
-            separatorBuilder: (context, i) => const SizedBox(width: 14),
+            separatorBuilder: (context, i) => const SizedBox(width: 6),
             itemBuilder: (context, i) => SizedBox(
-              width: 150,
-              child: ProductCard(product: items[i], imageHeight: 150),
+              width: 166,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8, bottom: 8),
+                child: ProductCard(product: items[i], imageHeight: 150),
+              ),
             ),
           ),
         ),
@@ -1278,11 +1348,16 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
   // ------------------------------------------------------------ PROMISE CARD
 
   Widget _promiseCard() {
-    Widget item(IconData icon, String title, String sub) {
+    Widget item(IconData icon, Color color, String title, String sub) {
       return Expanded(
         child: Column(
           children: [
-            Icon(icon, color: AppColors.primary, size: 26),
+            Container(
+              height: 46,
+              width: 46,
+              decoration: AppDeco.circle(color: color, shadow: 2, border: 2),
+              child: Icon(icon, color: AppColors.ink, size: 24),
+            ),
             const SizedBox(height: 8),
             Text(
               title,
@@ -1306,25 +1381,20 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen> {
       );
     }
 
-    Widget divider() =>
-        Container(height: 54, width: 1, color: AppColors.border);
-
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.fromLTRB(20, 0, 24, 4),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(26),
-          border: Border.all(color: AppColors.border),
-        ),
+        decoration: AppDeco.sticker(radius: 26, shadow: 4),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            item(Icons.verified_outlined, 'Fresh', 'Quality checked'),
-            divider(),
-            item(Icons.wb_twilight_rounded, 'Morning', 'Early delivery'),
-            divider(),
-            item(Icons.event_repeat_rounded, 'Flexible', 'Skip or pause'),
+            item(Icons.verified_outlined, AppColors.mint, 'Fresh',
+                'Quality checked'),
+            item(Icons.wb_twilight_rounded, AppColors.sun, 'Morning',
+                'Early delivery'),
+            item(Icons.event_repeat_rounded, AppColors.pink, 'Flexible',
+                'Skip or pause'),
           ],
         ),
       ),

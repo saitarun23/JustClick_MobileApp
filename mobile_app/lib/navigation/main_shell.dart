@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_theme.dart';
 import '../data/cart_controller.dart';
 import '../screens/cart/cart_screen.dart';
 import '../screens/categories/categories_screen.dart';
@@ -33,7 +34,7 @@ class _MainShellState extends State<MainShell> {
           ),
           Positioned(
             left: 20,
-            right: 20,
+            right: 24,
             bottom: MediaQuery.of(context).padding.bottom + 14,
             child: _Dock(index: _index, onChanged: _go),
           ),
@@ -53,19 +54,9 @@ class _Dock extends StatelessWidget {
     final cart = CartController.instance;
 
     return Container(
-      height: 66,
+      height: 68,
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: AppColors.ink,
-        borderRadius: BorderRadius.circular(33),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x40000000),
-            blurRadius: 24,
-            offset: Offset(0, 10),
-          ),
-        ],
-      ),
+      decoration: AppDeco.sticker(radius: 34, shadow: 4),
       child: ListenableBuilder(
         listenable: cart,
         builder: (context, _) {
@@ -82,7 +73,7 @@ class _Dock extends StatelessWidget {
               ),
               _DockItem(
                 icon: Icons.explore_rounded,
-                label: 'Explore',
+                label: 'Products',
                 selected: index == 1,
                 onTap: () => onChanged(1),
               ),
@@ -121,6 +112,11 @@ class _DockItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final showLabel = selected || highlight;
+    final color = highlight
+        ? AppColors.accent
+        : selected
+            ? AppColors.sun
+            : Colors.transparent;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -131,26 +127,30 @@ class _DockItem extends StatelessWidget {
         child: Container(
           height: 46,
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(horizontal: showLabel ? 16 : 14),
-          decoration: BoxDecoration(
-            color: highlight
-                ? AppColors.accent
-                : selected
-                    ? const Color(0x26FFFFFF)
-                    : Colors.transparent,
-            borderRadius: BorderRadius.circular(23),
-          ),
+          padding: EdgeInsets.symmetric(horizontal: showLabel ? 14 : 12),
+          decoration: showLabel
+              ? AppDeco.sticker(
+                  color: color,
+                  radius: 23,
+                  shadow: 2,
+                  border: 2,
+                )
+              : null,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 22, color: Colors.white),
+              Icon(
+                icon,
+                size: 22,
+                color: showLabel ? AppColors.ink : AppColors.textSecondary,
+              ),
               if (showLabel) ...[
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 Text(
                   label,
                   style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    color: AppColors.ink,
+                    fontWeight: FontWeight.w800,
                     fontSize: 13,
                   ),
                 ),

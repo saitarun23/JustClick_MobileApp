@@ -11,7 +11,7 @@ import '../models/product.dart';
 /// on the night before it is due.
 const int skipCutoffHour = 22; // 10 PM
 
-/// Longest vacation pause a customer can set in one go.
+/// Most days a customer can have paused at the same time.
 const int maxPauseDays = 14;
 
 enum Plan { daily, alternate, custom }
@@ -85,6 +85,7 @@ const _mnShort = [
 
 DateTime _dayOnly(DateTime d) => DateTime(d.year, d.month, d.day);
 int _dateKey(DateTime d) => d.year * 10000 + d.month * 100 + d.day;
+DateTime _fromKey(int k) => DateTime(k ~/ 10000, (k % 10000) ~/ 100, k % 100);
 
 class SubscriptionController extends ChangeNotifier {
   SubscriptionController._();
@@ -95,7 +96,7 @@ class SubscriptionController extends ChangeNotifier {
 
   final Map<String, Subscription> _subs = {};
   final Map<String, Set<int>> _skips = {}; // product id -> skipped date keys
-  DateTimeRange? _pause;
+  final Set<int> _pausedKeys = {}; // days when ALL deliveries are paused
 
   // ----------------------------------------------------------- SUBSCRIPTIONS
 
@@ -127,7 +128,7 @@ class SubscriptionController extends ChangeNotifier {
   void cancel(Product p) {
     _subs.remove(p.id);
     _skips.remove(p.id);
-    if (_subs.isEmpty) _pause = null;
+    if (_subs.isEmpty) _pausedKeys.clear();
     notifyListeners();
   }
 
@@ -174,47 +175,54 @@ class SubscriptionController extends ChangeNotifier {
     return true;
   }
 
-  // --------------------------------------------------------- VACATION PAUSE
+  // ------------------------------------------------------------ PAUSED DAYS
 
-  /// The active pause, or null when there is none (or it is over).
-  DateTimeRange? get pause {
-    final p = _pause;
-    if (p == null) return null;
-    final now = DateTime.now();
-    final tomorrow = DateTime(now.year, now.month, now.day + 1);
-    return p.end.isBefore(tomorrow) ? null : p;
-  }
+  bool isPaused(DateTime date) => _pausedKeys.contains(_dateKey(date));
 
-  bool isPaused(DateTime date) {
-    final p = _pause;
-    if (p == null) return false;
-    final d = _dayOnly(date);
-    return !d.isBefore(p.start) && !d.isAfter(p.end);
-  }
-
-  void setPause(DateTimeRange range) {
-    _pause = DateTimeRange(
-      start: _dayOnly(range.start),
-      end: _dayOnly(range.end),
-    );
-    notifyListeners();
-  }
-
-  /// Ends the pause. Days that are already locked stay paused.
-  void resumeAll() {
-    final p = _pause;
-    if (p == null) return;
-
+  /// Replaces every paused day that can still be changed with [days].
+  /// Days that are already locked keep their current state.
+  void setPausedDays(Iterable<DateTime> days) {
     final earliest = earliestChangeable;
-    if (p.start.isBefore(earliest)) {
-      final lastLocked =
-          DateTime(earliest.year, earliest.month, earliest.day - 1);
-      final end = lastLocked.isBefore(p.end) ? lastLocked : p.end;
-      _pause = DateTimeRange(start: p.start, end: end);
-    } else {
-      _pause = null;
+    _pausedKeys.removeWhere((k) => !_fromKey(k).isBefore(earliest));
+    for (final d in days) {
+      final day = _dayOnly(d);
+      if (!day.isBefore(earliest)) _pausedKeys.add(_dateKey(day));
     }
     notifyListeners();
+  }
+
+  void resumeAll() => setPausedDays(const []);
+
+  /// Upcoming paused days grouped into runs, e.g. 12 Nov and 14 to 16 Nov.
+  List<DateTimeRange> get pauseRanges {
+    final now = DateTime.now();
+    final tomorrow = DateTime(now.year, now.month, now.day + 1);
+    final days = _pausedKeys
+        .map(_fromKey)
+        .where((d) => !d.isBefore(tomorrow))
+        .toList()
+      ..sort();
+
+    final ranges = <DateTimeRange>[];
+    DateTime? start;
+    DateTime? prev;
+
+    for (final d in days) {
+      if (start == null || prev == null) {
+        start = d;
+        prev = d;
+      } else if (DateTime(d.year, d.month, d.day - 1) == prev) {
+        prev = d;
+      } else {
+        ranges.add(DateTimeRange(start: start, end: prev));
+        start = d;
+        prev = d;
+      }
+    }
+    if (start != null && prev != null) {
+      ranges.add(DateTimeRange(start: start, end: prev));
+    }
+    return ranges;
   }
 
   // ------------------------------------------------------------- SCHEDULE
