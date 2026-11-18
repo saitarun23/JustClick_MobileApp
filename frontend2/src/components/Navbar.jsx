@@ -1,18 +1,19 @@
 import { LuMapPin, LuShoppingBag, LuMousePointerClick } from "react-icons/lu";
 import "../styles/Navbar.css";
 
-export default function Navbar({ count, onCartClick }) {
+export default function Navbar({ count, onCart }) {
   return (
     <header className="nav">
-      <a className="logo" href="#top" aria-label="JustClick home">
-        <span className="logo-dot"><LuMousePointerClick /></span>
-        JustClick
-      </a>
-      <button className="loc"><LuMapPin /> Vizag, Andhra Pradesh</button>
-      <button className="bag" onClick={onCartClick} aria-label={`Open cart, ${count} items`}>
-        <LuShoppingBag />
-        {count > 0 && <span className="bag-count">{count}</span>}
-      </button>
+      <div className="wrap nav-in">
+        <a className="brand" href="#top"><span className="brand-dot"><LuMousePointerClick /></span>JustClick</a>
+        <nav className="links" aria-label="Sections">
+          <a href="#browse">Browse</a><a href="#menu">Menu</a><a href="#how">How it works</a>
+        </nav>
+        <button className="loc"><LuMapPin /> Vizag, Andhra Pradesh</button>
+        <button className="cart" onClick={onCart} aria-label={`Open order, ${count} items`}>
+          <LuShoppingBag /><span>{count}</span>
+        </button>
+      </div>
     </header>
   );
 }

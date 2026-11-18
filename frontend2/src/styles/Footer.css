@@ -1,5 +1,4 @@
-.foot {
-  display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between;
-  padding: 28px clamp(16px, 5vw, 64px); border-top: 1px solid var(--sea-line);
-  color: var(--muted); font-size: .9rem;
-}
+.foot { margin-top: 140px; padding: 72px 0 32px; background: var(--ink); color: var(--white); border-radius: 40px 40px 0 0; overflow: hidden; }
+.mark { font: 800 clamp(3.4rem, 15vw, 12rem)/.9 var(--display); letter-spacing: -.07em; color: var(--sea); }
+.foot-row { display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.15); color: #b9d6c6; }
+.foot-row nav { display: flex; gap: 24px; font-weight: 600; color: var(--white); }

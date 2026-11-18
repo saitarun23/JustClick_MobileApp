@@ -1,13 +1,15 @@
-import { LuMousePointerClick } from "react-icons/lu";
 import "../styles/Footer.css";
 
 export default function Footer() {
   return (
     <footer className="foot">
-      <span className="logo small">
-        <span className="logo-dot"><LuMousePointerClick /></span>JustClick
-      </span>
-      <p>Delivery from local shops. Made for quick evenings.</p>
+      <div className="wrap">
+        <p className="mark">JustClick</p>
+        <div className="foot-row">
+          <p>Delivery. Made for quick</p>
+          <nav aria-label="Footer"><a href="#browse">Browse</a><a href="#menu">Menu</a><a href="#how">How it works</a></nav>
+        </div>
+      </div>
     </footer>
   );
 }

@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Tracker from "./components/Tracker";
-import Categories from "./components/Categories";
-import Products from "./components/Products";
-import Cart from "./components/Cart";
+import Bento from "./components/Bento";
+import Menu from "./components/Menu";
+import Steps from "./components/Steps";
 import Footer from "./components/Footer";
+import Cart from "./components/Cart";
 import { PRODUCTS } from "./data/products";
 
 export default function App() {
@@ -24,47 +24,28 @@ export default function App() {
     });
 
   const shown = useMemo(
-    () =>
-      PRODUCTS.filter(
-        (p) =>
-          (cat === "all" || p.cat === cat) &&
-          (p.name + p.shop).toLowerCase().includes(query.toLowerCase())
-      ),
+    () => PRODUCTS.filter((p) => (cat === "all" || p.cat === cat) && (p.name + p.shop).toLowerCase().includes(query.toLowerCase())),
     [cat, query]
   );
-
   const count = Object.values(cart).reduce((s, n) => s + n, 0);
 
-  const placeOrder = () => {
-    setPlaced(true);
-    setCart({});
+  const pick = (id) => {
+    setCat((c) => (c === id ? "all" : id));
+    setTimeout(() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" }), 50);
   };
-  const closeCart = () => {
-    setOpen(false);
-    setPlaced(false);
-  };
+  const closeCart = () => { setOpen(false); setPlaced(false); };
 
   return (
     <>
-      <Navbar count={count} onCartClick={() => setOpen(true)} />
+      <Navbar count={count} onCart={() => setOpen(true)} />
       <main id="top">
         <Hero query={query} setQuery={setQuery} />
-        <Tracker />
-        <section className="shelf">
-          <Categories active={cat} onChange={setCat} />
-          <Products products={shown} cart={cart} query={query} onAdd={add} onRemove={remove} />
-        </section>
+        <Bento active={cat} onPick={pick} />
+        <Menu products={shown} cart={cart} cat={cat} query={query} onAdd={add} onRemove={remove} onClear={() => { setCat("all"); setQuery(""); }} />
+        <Steps />
       </main>
       <Footer />
-      <Cart
-        open={open}
-        cart={cart}
-        placed={placed}
-        onAdd={add}
-        onRemove={remove}
-        onPlace={placeOrder}
-        onClose={closeCart}
-      />
+      <Cart open={open} cart={cart} placed={placed} onAdd={add} onRemove={remove} onPlace={() => { setPlaced(true); setCart({}); }} onClose={closeCart} />
     </>
   );
 }

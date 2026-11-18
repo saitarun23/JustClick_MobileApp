@@ -1,29 +1,23 @@
 :root {
-  --sea: #2e8b57;
-  --sea-deep: #1f6b42;
-  --sea-ink: #0f3d27;
-  --sea-mist: #e8f5ee;
-  --sea-line: #cfe8da;
-  --white: #ffffff;
-  --muted: #5d7a6a;
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --body: "Instrument Sans", system-ui, sans-serif;
+  --sea: #2e8b57; --deep: #14573a; --ink: #0b2a1c;
+  --mint: #dff3e7; --foam: #f1faf5; --white: #fff; --muted: #577565;
+  --display: "Unbounded", system-ui, sans-serif;
+  --body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --wrap: min(1240px, 100% - clamp(32px, 6vw, 96px));
 }
-* { box-sizing: border-box; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  background: var(--white);
-  color: var(--sea-ink);
-  font-family: var(--body);
-  font-size: 16px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+body { background: var(--white); color: var(--ink); font: 400 16px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+#root { max-width: none; margin: 0; padding: 0; text-align: left; width: 100%; }
 button, input { font: inherit; color: inherit; }
 button { cursor: pointer; border: 0; background: none; }
+a { color: inherit; text-decoration: none; }
 svg { flex-shrink: 0; }
-:focus-visible { outline: 3px solid var(--sea); outline-offset: 3px; border-radius: 8px; }
-.empty { margin-top: 40px; color: var(--muted); }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-}
+:focus-visible { outline: 3px solid var(--sea); outline-offset: 3px; border-radius: 10px; }
+.wrap { width: var(--wrap); margin-inline: auto; }
+.empty { padding: 32px 0; color: var(--muted); }
+/* shared quantity control */
+.qty { display: inline-flex; align-items: center; border-radius: 999px; background: var(--ink); color: var(--white); }
+.qty button { width: 36px; height: 36px; display: grid; place-items: center; color: var(--white); border-radius: 50%; }
+.qty span { min-width: 20px; text-align: center; font-weight: 700; font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
