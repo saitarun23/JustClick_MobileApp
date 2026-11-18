@@ -1,0 +1,29 @@
+:root {
+  --sea: #2e8b57;
+  --sea-deep: #1f6b42;
+  --sea-ink: #0f3d27;
+  --sea-mist: #e8f5ee;
+  --sea-line: #cfe8da;
+  --white: #ffffff;
+  --muted: #5d7a6a;
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Instrument Sans", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--sea-ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; }
+svg { flex-shrink: 0; }
+:focus-visible { outline: 3px solid var(--sea); outline-offset: 3px; border-radius: 8px; }
+.empty { margin-top: 40px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

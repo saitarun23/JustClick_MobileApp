@@ -1,0 +1,21 @@
+.track {
+  display: flex; justify-content: space-between; gap: 8px;
+  max-width: 880px; margin: 24px auto 0; padding: 0 clamp(16px, 5vw, 64px);
+  position: relative;
+}
+.track::before {
+  content: ""; position: absolute; left: calc(clamp(16px, 5vw, 64px) + 12px);
+  right: calc(clamp(16px, 5vw, 64px) + 12px); top: 11px; height: 2px;
+  background: linear-gradient(90deg, var(--sea) 0 38%, var(--sea-line) 38%);
+}
+.track-step {
+  position: relative; display: flex; flex-direction: column; align-items: center;
+  gap: 8px; font-size: .85rem; font-weight: 600; color: var(--muted);
+}
+.track-dot {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--white);
+  border: 2px solid var(--sea-line); display: grid; place-items: center;
+  color: var(--white); font-size: .8rem;
+}
+.track-step:nth-child(-n+2) { color: var(--sea-deep); }
+.track-step:nth-child(-n+2) .track-dot { background: var(--sea); border-color: var(--sea); }

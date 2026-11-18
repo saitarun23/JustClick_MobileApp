@@ -1,0 +1,5 @@
+.shelf { max-width: 1280px; margin: 0 auto; padding: 48px clamp(16px, 5vw, 64px) 72px; }
+.grid {
+  display: grid; gap: 28px; margin-top: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}

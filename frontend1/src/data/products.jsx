@@ -1,10 +1,10 @@
 const img = (text, bg) =>
   `https://placehold.co/400x400/${bg}/5a3e2b?text=${encodeURIComponent(text)}`;
 
-const DAIRY = "fbf1dc";
-const POWDER = "f6e2b8";
-const PICKLE = "f0cfc2";
-const OTHER = "e6e4cf";
+const DAIRY = "ffe9f1";
+const POWDER = "ffd9e8";
+const PICKLE = "ffc9de";
+const OTHER = "fbe0ec";
 
 export const products = [
   // Dairy
@@ -33,10 +33,10 @@ export const products = [
 ];
 
 export const combos = [
-  { id: 101, name: "Pickle Trio Pack", tag: "Combo", price: 650, size: "3 jars", rating: 5, benefit: "Avakaya, gongura & garlic", image: img("Pickle Trio", PICKLE) },
-  { id: 102, name: "Breakfast Essentials Box", tag: "Combo", price: 599, size: "4 items", rating: 5, benefit: "Idli podi, ragi mix, ghee & more", image: img("Breakfast Box", POWDER) },
-  { id: 103, name: "Dairy Starter Pack", tag: "Combo", price: 1100, size: "3 items", rating: 4, benefit: "Ghee, butter & paneer", image: img("Dairy Pack", DAIRY) },
-  { id: 104, name: "Festival Gift Hamper", tag: "Combo", price: 1999, size: "8 items", rating: 5, benefit: "Best-sellers in a gift box", image: img("Gift Hamper", OTHER) },
+  { id: 101, name: "Pickle Trio Pack", tag: "Combo", price: 650, oldPrice: 720, size: "3 jars", rating: 5, benefit: "Avakaya, gongura & garlic", image: img("Pickle Trio", PICKLE) },
+  { id: 102, name: "Breakfast Essentials Box", tag: "Combo", price: 599, oldPrice: 699, size: "4 items", rating: 5, benefit: "Idli podi, ragi mix, ghee & more", image: img("Breakfast Box", POWDER) },
+  { id: 103, name: "Dairy Starter Pack", tag: "Combo", price: 1100, oldPrice: 1200, size: "3 items", rating: 4, benefit: "Ghee, butter & paneer", image: img("Dairy Pack", DAIRY) },
+  { id: 104, name: "Festival Gift Hamper", tag: "Combo", price: 1999, oldPrice: 2499, size: "8 items", rating: 5, benefit: "Best-sellers in a gift box", image: img("Gift Hamper", OTHER) },
 ];
 
 export const collections = [

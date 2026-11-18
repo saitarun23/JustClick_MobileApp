@@ -1,0 +1,40 @@
+.scrim { position: fixed; inset: 0; z-index: 30; background: rgba(15,61,39,.35); }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 40; width: min(400px, 100%);
+  background: var(--white); border-left: 2px solid var(--sea); padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+  transform: translateX(105%); transition: transform .3s cubic-bezier(.2,.8,.2,1); visibility: hidden;
+}
+.drawer.open { transform: none; visibility: visible; }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; }
+.drawer-head h2 { font-family: var(--display); font-size: 1.6rem; letter-spacing: -0.03em; }
+.drawer-head button {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  border-radius: 50%; background: var(--sea-mist); font-size: 1.1rem;
+}
+.lines { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+.lines li {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center;
+  padding-bottom: 14px; border-bottom: 1px dashed var(--sea-line);
+}
+.lines small { display: block; color: var(--muted); }
+.drawer .stepper {
+  display: inline-flex; align-items: center; border-radius: 12px; background: var(--sea); color: var(--white);
+}
+.drawer .stepper button { width: 30px; height: 30px; display: grid; place-items: center; color: var(--white); }
+.drawer .stepper span { min-width: 22px; text-align: center; font-weight: 700; }
+.sum { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding: 0; }
+.sum div { display: flex; justify-content: space-between; }
+.sum dd { margin: 0; font-weight: 600; }
+.sum .total { padding-top: 10px; border-top: 2px solid var(--sea); font-family: var(--display); font-size: 1.25rem; }
+.checkout { padding: 14px; border-radius: 14px; background: var(--sea); color: var(--white); font-weight: 700; font-size: 1rem; }
+.checkout:hover { background: var(--sea-deep); }
+.hint { text-align: center; color: var(--muted); font-size: .85rem; }
+.done { margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.done-badge {
+  width: 72px; height: 72px; display: grid; place-items: center;
+  border-radius: 50%; background: var(--sea); color: var(--white); font-size: 2rem;
+}
+.done h3 { font-family: var(--display); font-size: 1.5rem; }
+.done p { color: var(--muted); }
+.done .checkout { width: 100%; margin-top: 8px; }
