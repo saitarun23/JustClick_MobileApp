@@ -1,9 +1,0 @@
-.steps-sec { padding-top: 100px; }
-.steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
-.steps li { position: relative; padding: 32px 28px 36px; border-radius: 28px; background: var(--foam); }
-.steps li:nth-child(2) { background: var(--mint); transform: translateY(24px); }
-.step-n { position: absolute; top: 20px; right: 24px; font: 800 3.4rem/1 var(--display); letter-spacing: -.06em; color: var(--sea); opacity: .25; }
-.step-i { font-size: 2.2rem; color: var(--sea); margin-bottom: 40px; }
-.steps h3 { font: 700 1.3rem var(--display); letter-spacing: -.04em; margin-bottom: 8px; }
-.steps p { color: var(--muted); max-width: 30ch; }
-@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } .steps li:nth-child(2) { transform: none; } }

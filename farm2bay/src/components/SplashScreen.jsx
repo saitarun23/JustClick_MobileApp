@@ -10,7 +10,7 @@ export default function SplashScreen({ onFinish }) {
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    const duration = 3800; // 3.8s smooth cinematic farm-to-city journey
+    const duration = 4000; // 4.0s smooth Farm-to-Bay journey
     const startTime = performance.now();
     let frameId;
 
@@ -25,7 +25,7 @@ export default function SplashScreen({ onFinish }) {
         setTimeout(() => {
           setExiting(true);
           setTimeout(onFinish, 450);
-        }, 280);
+        }, 320);
       }
     };
 
@@ -60,51 +60,50 @@ export default function SplashScreen({ onFinish }) {
         </svg>
       </button>
 
-      {/* Top Vintage Brand Lockup */}
+      {/* Top Brand Emblem & Farmer's Market Style FARM2BAY Title */}
       <div className="splash-center-brand">
         <SplashVintageTitle />
       </div>
 
-      {/* Widescreen Cinematic Viewport: Fixed Center Truck + Scrolling World */}
+      {/* Widescreen Cinematic Viewport: Fixed Center Truck + Scrolling Farm-to-Bay World */}
       <div className="cinematic-viewport">
-        {/* Soft Side Vignette Fade into Pure #FFFFFF Background */}
         <div className="viewport-fade-left" />
         <div className="viewport-fade-right" />
 
-        {/* Slow Drifting Sky Clouds */}
+        {/* Drifting Clouds */}
         <div className="sky-clouds-layer" aria-hidden="true">
-          <svg viewBox="0 0 1200 90" fill="none">
-            <path d="M120 55H190C198 55 204 49 204 41C204 34 198 28 191 28C188 18 179 12 168 12C155 12 145 22 144 34C131 35 120 44 120 55Z" fill="#f1f5f9" />
-            <path d="M540 46H620C629 46 636 39 636 30C636 22 629 15 621 15C617 5 607 -1 595 -1C581 -1 569 10 568 23C553 24 540 34 540 46Z" fill="#f1f5f9" />
-            <path d="M940 58H1015C1023 58 1030 51 1030 43C1030 35 1024 29 1016 29C1013 19 1003 13 992 13C978 13 967 23 966 36C952 37 940 46 940 58Z" fill="#f1f5f9" />
+          <svg viewBox="0 0 1400 90" fill="none">
+            <path d="M140 55H210C218 55 224 49 224 41C224 34 218 28 211 28C208 18 199 12 188 12C175 12 165 22 164 34C151 35 140 44 140 55Z" fill="#f1f5f9" />
+            <path d="M560 44H640C649 44 656 37 656 28C656 20 649 13 641 13C637 3 627 -3 615 -3C601 -3 589 8 588 21C573 22 560 32 560 44Z" fill="#f1f5f9" />
+            <path d="M980 56H1055C1063 56 1070 49 1070 41C1070 33 1064 27 1056 27C1053 17 1043 11 1032 11C1018 11 1007 21 1006 34C992 35 980 44 980 56Z" fill="#f1f5f9" />
           </svg>
         </div>
 
-        {/* Continuous Farm -> Highway -> City Panoramic Background */}
+        {/* Continuous Farm (x=540) -> Highway (x=1200) -> City Bay (x=1860) Panorama */}
         <div
           className="panorama-track"
           style={{
-            transform: `translateX(-${progress * 0.54}%)`,
+            transform: `translateX(-${progress * 13.2}px)`,
           }}
         >
           <PanoramicWorldIllustration />
         </div>
 
-        {/* FIXED CENTER PICKUP TRUCK (WHEELS SPINNING + SUSPENSION BOUNCE) */}
+        {/* Fixed Center Heritage Pickup Truck (Spinning Wheels + Suspension Bounce) */}
         <div className="fixed-center-truck">
           <div className="truck-road-feel">
             <FarmTruckIllustration className="splash-truck-svg" />
           </div>
         </div>
 
-        {/* Fast-Scrolling Asphalt Road & Lane Markings */}
+        {/* Moving Asphalt Highway Road */}
         <div className="journey-road">
           <div className="road-shoulder" />
           <div className="road-dashes-scroll" />
         </div>
       </div>
 
-      {/* Minimal Bottom Progress Indicator */}
+      {/* Minimal Progress Bar */}
       <div className="splash-footer">
         <div className="splash-progress-track">
           <div className="splash-progress-fill" style={{ width: `${progress}%` }} />

@@ -3,7 +3,7 @@
   --primary-dark: #558b15;
   --primary-soft: #f3fae8;
   --forest: #1b4332;
-  --terracotta: #c84b31;
+  --terracotta: #b83a2d;
   --ink: #1c261a;
   --bg-white: #ffffff;
   --border-subtle: rgba(28, 38, 26, 0.14);
@@ -34,9 +34,10 @@ body,
 
 h1,
 h2 {
-  font-family: 'Alfa Slab One', Georgia, serif;
-  letter-spacing: 0.015em;
-  font-weight: 400;
+  font-family: 'Oswald', Impact, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 700;
 }
 
 h3,
@@ -64,7 +65,7 @@ h4 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 32px 24px 40px;
+  padding: 28px 24px 38px;
   transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
@@ -97,7 +98,7 @@ h4 {
 }
 
 .splash-center-brand {
-  margin-top: 10px;
+  margin-top: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,12 +109,12 @@ h4 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
   animation: popInBrand 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .vintage-title-svg {
-  width: min(460px, 88vw);
+  width: min(380px, 84vw);
   height: auto;
   display: block;
 }
@@ -133,40 +134,39 @@ h4 {
 .cinematic-viewport {
   position: relative;
   width: 100%;
-  max-width: 1040px;
-  height: 270px;
+  max-width: 1080px;
+  height: 292px;
   background: #ffffff;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
 }
 
-/* Soft edge fades so panorama blends seamlessly into white screen */
 .viewport-fade-left,
 .viewport-fade-right {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 72px;
+  width: 84px;
   z-index: 8;
   pointer-events: none;
 }
 
 .viewport-fade-left {
   left: 0;
-  background: linear-gradient(to right, #ffffff 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, #ffffff 18%, rgba(255, 255, 255, 0) 100%);
 }
 
 .viewport-fade-right {
   right: 0;
-  background: linear-gradient(to left, #ffffff 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to left, #ffffff 18%, rgba(255, 255, 255, 0) 100%);
 }
 
 .sky-clouds-layer {
   position: absolute;
-  top: 6px;
+  top: 4px;
   left: 0;
-  width: 1600px;
+  width: 1800px;
   z-index: 1;
   animation: cloudsDrift 18s linear infinite;
   pointer-events: none;
@@ -181,13 +181,13 @@ h4 {
   }
 }
 
-/* Scrolling Farm -> Road -> City World */
+/* Scrolling Farm (x=540) -> Highway -> City Bay (x=1860) Panorama */
 .panorama-track {
   position: absolute;
   bottom: 22px;
-  left: 0;
-  width: 2200px;
-  height: 248px;
+  left: calc(50% - 540px);
+  width: 2400px;
+  height: 270px;
   z-index: 2;
   will-change: transform;
   transition: transform 0.08s linear;
@@ -209,7 +209,7 @@ h4 {
   left: 50%;
   bottom: 16px;
   transform: translateX(-50%);
-  width: 280px;
+  width: 292px;
   z-index: 6;
   pointer-events: none;
 }
@@ -225,7 +225,7 @@ h4 {
 }
 
 .wheel-spin {
-  animation: spinWheel 0.44s linear infinite;
+  animation: spinWheel 0.42s linear infinite;
 }
 
 .exhaust-puff {
@@ -269,7 +269,7 @@ h4 {
   }
 }
 
-/* Fast-Scrolling Road Beneath Fixed Truck */
+/* Fast-Scrolling Asphalt Road Beneath Fixed Truck */
 .journey-road {
   position: absolute;
   left: 0;
@@ -298,7 +298,7 @@ h4 {
   margin-top: 2px;
   background-image: linear-gradient(to right, #ffffff 48%, transparent 48%);
   background-size: 44px 3px;
-  animation: roadScroll 0.38s linear infinite;
+  animation: roadScroll 0.36s linear infinite;
 }
 
 @keyframes roadScroll {
@@ -356,18 +356,19 @@ h4 {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--forest);
+  color: var(--terracotta);
 }
 
 .brand-text {
-  font-family: 'Alfa Slab One', Georgia, serif;
-  font-size: 1.45rem;
-  letter-spacing: 0.02em;
+  font-family: 'Oswald', Impact, sans-serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 0.03em;
 }
 
 .brand-text strong {
-  color: var(--terracotta);
-  font-weight: 400;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .nav-links {
@@ -464,9 +465,9 @@ h4 {
 }
 
 .hero-copy h1 {
-  font-size: clamp(2.1rem, 4.1vw, 3.1rem);
-  line-height: 1.16;
-  color: var(--forest);
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--ink);
   margin-bottom: 16px;
 }
 
@@ -577,8 +578,8 @@ h4 {
 }
 
 .market-header h2 {
-  font-size: clamp(1.8rem, 3.1vw, 2.4rem);
-  color: var(--forest);
+  font-size: clamp(2rem, 3.4vw, 2.7rem);
+  color: var(--ink);
 }
 
 .search-box input {
@@ -773,8 +774,8 @@ h4 {
 }
 
 .section-heading h2 {
-  font-size: clamp(1.8rem, 3.1vw, 2.4rem);
-  color: var(--forest);
+  font-size: clamp(2rem, 3.4vw, 2.7rem);
+  color: var(--ink);
   margin-bottom: 10px;
 }
 
@@ -1022,10 +1023,10 @@ h4 {
   }
 
   .fixed-center-truck {
-    width: 225px;
+    width: 235px;
   }
 
   .cinematic-viewport {
-    height: 230px;
+    height: 245px;
   }
 }

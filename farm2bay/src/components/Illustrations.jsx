@@ -1,56 +1,62 @@
 import React from 'react';
 
 /* =========================================================
-   1. BRAND LOGO MARK & VINTAGE FARM2BAY SPLASH TITLE
+   1. BRAND EMBLEM & FARMER'S MARKET POSTER TITLE (FARM2BAY)
    ========================================================= */
-export function Farm2BayLogoMark({ size = 42 }) {
+export function Farm2BayLogoMark({ size = 44 }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 52 52"
+      viewBox="0 0 56 56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
+      <defs>
+        <linearGradient id="badgeLeafGrad" x1="10" y1="8" x2="46" y2="48" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#8bd42a" />
+          <stop offset="100%" stopColor="#5a9614" />
+        </linearGradient>
+      </defs>
       <rect
         x="3"
         y="3"
-        width="46"
-        height="46"
-        rx="14"
-        fill="#1b4332"
+        width="50"
+        height="50"
+        rx="15"
+        fill="#ffffff"
         stroke="#1c261a"
-        strokeWidth="2.5"
+        strokeWidth="2.8"
       />
-      <circle cx="26" cy="26" r="18" fill="#78be21" fillOpacity="0.16" />
+      <circle cx="28" cy="28" r="20" fill="url(#badgeLeafGrad)" fillOpacity="0.16" />
       {/* Botanical Sprout */}
       <path
-        d="M26 29C26 20 32 14 39 14C39 22 33 29 26 29Z"
+        d="M28 31C28 21 34 15 41 15C41 23 35 31 28 31Z"
         fill="#78be21"
-        stroke="#ffffff"
-        strokeWidth="2"
+        stroke="#1c261a"
+        strokeWidth="2.2"
         strokeLinejoin="round"
       />
       <path
-        d="M26 29C26 22 20 17 13 17C13 24 19 29 26 29Z"
-        fill="#a3e635"
-        stroke="#ffffff"
-        strokeWidth="2"
+        d="M28 31C28 23 22 18 15 18C15 25 21 31 28 31Z"
+        fill="#9ee03b"
+        stroke="#1c261a"
+        strokeWidth="2.2"
         strokeLinejoin="round"
       />
-      {/* Harvest Crate Base */}
+      {/* Wooden Harvest Crate */}
       <rect
-        x="14"
-        y="31"
-        width="24"
-        height="9"
+        x="15"
+        y="33"
+        width="26"
+        height="10"
         rx="2.5"
         fill="#d99b52"
-        stroke="#ffffff"
-        strokeWidth="2"
+        stroke="#1c261a"
+        strokeWidth="2.2"
       />
-      <line x1="26" y1="27" x2="26" y2="31" stroke="#ffffff" strokeWidth="2" />
+      <line x1="28" y1="29" x2="28" y2="33" stroke="#1c261a" strokeWidth="2.2" />
     </svg>
   );
 }
@@ -60,62 +66,63 @@ export function SplashVintageTitle() {
     <div className="splash-brand-lockup">
       <Farm2BayLogoMark size={54} />
       <svg
-        viewBox="0 0 540 104"
+        viewBox="0 0 460 124"
         className="vintage-title-svg"
         role="img"
         aria-label="FARM2BAY"
       >
         <defs>
-          <filter id="vintage-grain" x="-4%" y="-4%" width="108%" height="108%">
+          {/* Distressed Ink Stamp Filter matching Farmer's Market Poster */}
+          <filter id="farmers-stamp" x="-5%" y="-5%" width="110%" height="110%">
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.7"
+              baseFrequency="0.75"
               numOctaves="2"
+              seed="4"
               result="noise"
             />
             <feDisplacementMap
               in="SourceGraphic"
               in2="noise"
-              scale="1.2"
+              scale="1.8"
               xChannelSelector="R"
               yChannelSelector="G"
             />
           </filter>
         </defs>
 
-        {/* Decorative Vintage Side Rules */}
-        <line x1="36" y1="54" x2="78" y2="54" stroke="#78be21" strokeWidth="3.5" strokeLinecap="round" />
-        <circle cx="28" cy="54" r="3.5" fill="#c84b31" />
-        <line x1="462" y1="54" x2="504" y2="54" stroke="#78be21" strokeWidth="3.5" strokeLinecap="round" />
-        <circle cx="512" cy="54" r="3.5" fill="#c84b31" />
-
-        {/* Subtle Offset Drop Shadow for Editorial Depth */}
-        <text
-          x="272"
-          y="74"
-          textAnchor="middle"
-          fontFamily="'Alfa Slab One', Georgia, serif"
-          fontSize="58"
-          letterSpacing="3"
-          fill="#e7efe0"
-        >
-          FARM 2 BAY
-        </text>
-
-        {/* Main Vintage Two-Tone Title */}
-        <g filter="url(#vintage-grain)">
+        {/* Subtle Dynamic Poster Tilt (-2.5deg) matching Farmer's Market Reference */}
+        <g transform="rotate(-2.5 230 62)">
+          {/* Soft Print Shadow */}
           <text
-            x="270"
-            y="71"
+            x="233"
+            y="95"
             textAnchor="middle"
-            fontFamily="'Alfa Slab One', Georgia, serif"
-            fontSize="58"
+            fontFamily="'Oswald', Impact, sans-serif"
+            fontWeight="700"
+            fontSize="86"
             letterSpacing="3"
+            fill="#e6ece1"
           >
-            <tspan fill="#1b4332">FARM</tspan>
-            <tspan fill="#c84b31"> 2 </tspan>
-            <tspan fill="#78be21">BAY</tspan>
+            FARM2BAY
           </text>
+
+          {/* Main Distressed Vintage Condensed Typography */}
+          <g filter="url(#farmers-stamp)">
+            <text
+              x="230"
+              y="92"
+              textAnchor="middle"
+              fontFamily="'Oswald', Impact, sans-serif"
+              fontWeight="700"
+              fontSize="86"
+              letterSpacing="3"
+            >
+              <tspan fill="#b83a2d">FARM</tspan>
+              <tspan fill="#78be21">2</tspan>
+              <tspan fill="#1c261a">BAY</tspan>
+            </text>
+          </g>
         </g>
       </svg>
     </div>
@@ -123,360 +130,428 @@ export function SplashVintageTitle() {
 }
 
 /* =========================================================
-   2. CONTINUOUS CINEMATIC FARM-TO-CITY PANORAMA (2200px WIDE)
+   2. REALISTIC FARM -> HIGHWAY -> CITY WATERFRONT BAY (2400px)
    ========================================================= */
 export function PanoramicWorldIllustration() {
   return (
     <svg
-      viewBox="0 0 2200 260"
+      viewBox="0 0 2400 280"
       className="panorama-svg"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* ---------------- SKYLINE HORIZON SILHOUETTES (FAR DEPTH) ---------------- */}
-      <path
-        d="M0 218C180 158 340 164 520 218H0Z"
-        fill="#f2f8ea"
-      />
-      <path
-        d="M420 218C610 166 790 172 980 218H420Z"
-        fill="#eef6e4"
-      />
-      {/* Distant City Silhouette rising as truck nears city */}
-      <g fill="#f3f7ef">
-        <rect x="1360" y="138" width="46" height="80" rx="3" />
-        <rect x="1414" y="112" width="54" height="106" rx="3" />
-        <rect x="1478" y="146" width="42" height="72" rx="3" />
-        <rect x="1780" y="124" width="52" height="94" rx="3" />
-        <rect x="1842" y="102" width="60" height="116" rx="3" />
-        <rect x="1912" y="136" width="48" height="82" rx="3" />
-      </g>
+      <defs>
+        {/* Realistic Sky & Sunlight Gradients */}
+        <radialGradient id="morningSunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#ffd166" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="#ffd166" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="farmHillBack" x1="0" y1="150" x2="0" y2="245" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#e8f5d6" />
+          <stop offset="100%" stopColor="#d4ebb6" />
+        </linearGradient>
+        <linearGradient id="farmHillFront" x1="0" y1="170" x2="0" y2="245" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#8ed134" />
+          <stop offset="100%" stopColor="#69ab19" />
+        </linearGradient>
+        <linearGradient id="barnWallGrad" x1="0" y1="130" x2="0" y2="228" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#c84637" />
+          <stop offset="100%" stopColor="#9c2e22" />
+        </linearGradient>
+        <linearGradient id="siloMetalGrad" x1="210" y1="110" x2="256" y2="110" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ced4da" />
+          <stop offset="45%" stopColor="#f8f9fa" />
+          <stop offset="100%" stopColor="#adb5bd" />
+        </linearGradient>
+        <linearGradient id="bayWaterGrad" x1="0" y1="204" x2="0" y2="248" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#4ea8de" />
+          <stop offset="50%" stopColor="#2a9d8f" />
+          <stop offset="100%" stopColor="#1d6f8a" />
+        </linearGradient>
+        <linearGradient id="glassTowerGrad" x1="0" y1="45" x2="1" y2="1">
+          <stop offset="0%" stopColor="#e8f4f8" />
+          <stop offset="50%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#dceef2" />
+        </linearGradient>
+      </defs>
 
       {/* ====================================================================
-          ZONE 1 (x: 0 - 820): REALISTIC COUNTRYSIDE FARM & ORCHARD
+          PART 1 (x: 100 - 880): REALISTIC COUNTRYSIDE FARM (VISIBLE AT START!)
          ==================================================================== */}
-      {/* Warm Morning Sun */}
-      <circle cx="110" cy="54" r="24" fill="#ffd166" />
-      <circle cx="110" cy="54" r="32" fill="#ffd166" fillOpacity="0.22" />
+      {/* Warm Sun & Glow */}
+      <circle cx="195" cy="58" r="54" fill="url(#morningSunGlow)" />
+      <circle cx="195" cy="58" r="22" fill="#ffd166" />
 
-      {/* Rolling Terraced Farm Fields */}
+      {/* Rolling Multi-Layer Farm Hills */}
       <path
-        d="M0 224C140 164 310 170 470 224H0Z"
-        fill="#e3f3ce"
-        stroke="#78be21"
-        strokeWidth="2"
+        d="M40 242C190 158 390 162 570 242H40Z"
+        fill="url(#farmHillBack)"
       />
       <path
-        d="M360 224C520 176 690 180 860 224H360Z"
-        fill="#d5ecba"
-        stroke="#78be21"
-        strokeWidth="2"
+        d="M360 242C540 168 750 172 940 242H360Z"
+        fill="url(#farmHillFront)"
+        fillOpacity="0.26"
       />
-      {/* Crop Furrow Lines */}
-      <path d="M290 214C340 198 400 198 450 214" stroke="#78be21" strokeWidth="2" strokeDasharray="8 6" />
-      <path d="M510 214C565 198 630 198 685 214" stroke="#78be21" strokeWidth="2" strokeDasharray="8 6" />
+      {/* Ploughed Crop Furrows */}
+      <path d="M470 228C545 204 630 204 705 228" stroke="#78be21" strokeWidth="2.4" strokeDasharray="10 7" />
+      <path d="M510 237C585 216 670 216 745 237" stroke="#5a9614" strokeWidth="2.2" strokeDasharray="8 6" />
 
-      {/* Grain Silo beside Barn */}
-      <rect x="146" y="112" width="34" height="96" fill="#e9ecef" stroke="#1c261a" strokeWidth="2.2" />
-      <path d="M146 112C146 95 180 95 180 112H146Z" fill="#adb5bd" stroke="#1c261a" strokeWidth="2.2" />
-      <line x1="146" y1="136" x2="180" y2="136" stroke="#1c261a" strokeWidth="1.5" />
-      <line x1="146" y1="162" x2="180" y2="162" stroke="#1c261a" strokeWidth="1.5" />
-      <line x1="146" y1="188" x2="180" y2="188" stroke="#1c261a" strokeWidth="1.5" />
+      {/* Realistic Metallic Grain Silo */}
+      <rect x="214" y="114" width="40" height="114" fill="url(#siloMetalGrad)" stroke="#1c261a" strokeWidth="2" />
+      <path d="M214 114C214 93 254 93 254 114H214Z" fill="#adb5bd" stroke="#1c261a" strokeWidth="2" />
+      <line x1="214" y1="142" x2="254" y2="142" stroke="#6c757d" strokeWidth="1.5" />
+      <line x1="214" y1="170" x2="254" y2="170" stroke="#6c757d" strokeWidth="1.5" />
+      <line x1="214" y1="198" x2="254" y2="198" stroke="#6c757d" strokeWidth="1.5" />
 
-      {/* Classic Rustic Red Barn */}
-      <rect x="180" y="132" width="96" height="76" fill="#c84b31" stroke="#1c261a" strokeWidth="2.4" />
+      {/* Classic Timber & Red Barn */}
+      <rect x="254" y="138" width="116" height="90" fill="url(#barnWallGrad)" stroke="#1c261a" strokeWidth="2.4" />
+      {/* Vertical Barn Wood Planks */}
+      <line x1="278" y1="138" x2="278" y2="228" stroke="#7d2218" strokeWidth="1.4" />
+      <line x1="346" y1="138" x2="346" y2="228" stroke="#7d2218" strokeWidth="1.4" />
+      {/* Gambrel Barn Roof */}
       <path
-        d="M170 134L228 92L286 134H170Z"
-        fill="#9e351e"
+        d="M244 140L272 104L312 86L352 104L380 140H244Z"
+        fill="#7f1d1d"
         stroke="#1c261a"
         strokeWidth="2.4"
         strokeLinejoin="round"
       />
       {/* Hayloft Window */}
-      <rect x="218" y="108" width="20" height="16" fill="#ffffff" stroke="#1c261a" strokeWidth="2" />
-      {/* Barn Double Doors */}
-      <rect x="206" y="160" width="44" height="48" fill="#ffffff" stroke="#1c261a" strokeWidth="2.2" />
-      <line x1="228" y1="160" x2="228" y2="208" stroke="#1c261a" strokeWidth="2" />
-      <line x1="206" y1="160" x2="228" y2="208" stroke="#c84b31" strokeWidth="1.8" />
-      <line x1="250" y1="160" x2="228" y2="208" stroke="#c84b31" strokeWidth="1.8" />
+      <rect x="300" y="108" width="24" height="20" rx="2" fill="#fff8eb" stroke="#1c261a" strokeWidth="2" />
+      {/* White-Trimmed Barn Doors */}
+      <rect x="288" y="172" width="48" height="56" fill="#ffffff" stroke="#1c261a" strokeWidth="2.2" />
+      <line x1="312" y1="172" x2="312" y2="228" stroke="#1c261a" strokeWidth="2" />
+      <line x1="288" y1="172" x2="312" y2="228" stroke="#b83a2d" strokeWidth="2" />
+      <line x1="336" y1="172" x2="312" y2="228" stroke="#b83a2d" strokeWidth="2" />
 
-      {/* Farm Windmill */}
-      <path d="M326 208L338 124H348L360 208" stroke="#1c261a" strokeWidth="2.2" fill="#ffffff" />
-      <line x1="331" y1="176" x2="355" y2="176" stroke="#1c261a" strokeWidth="2" />
-      <line x1="334" y1="150" x2="352" y2="150" stroke="#1c261a" strokeWidth="2" />
-      <g className="windmill-blades" style={{ transformOrigin: '343px 124px' }}>
-        <line x1="343" y1="92" x2="343" y2="156" stroke="#1c261a" strokeWidth="2.4" />
-        <line x1="311" y1="124" x2="375" y2="124" stroke="#1c261a" strokeWidth="2.4" />
-        <rect x="339" y="94" width="8" height="18" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
-        <rect x="339" y="136" width="8" height="18" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
-        <rect x="313" y="120" width="18" height="8" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
-        <rect x="355" y="120" width="18" height="8" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
+      {/* Farm Windmill with Spinning Rotor */}
+      <path d="M412 228L426 128H436L450 228" stroke="#1c261a" strokeWidth="2.2" fill="#f8f9fa" />
+      <line x1="417" y1="192" x2="445" y2="192" stroke="#1c261a" strokeWidth="2" />
+      <line x1="421" y1="160" x2="441" y2="160" stroke="#1c261a" strokeWidth="2" />
+      <g className="windmill-blades" style={{ transformOrigin: '431px 128px' }}>
+        <line x1="431" y1="90" x2="431" y2="166" stroke="#1c261a" strokeWidth="2.4" />
+        <line x1="393" y1="128" x2="469" y2="128" stroke="#1c261a" strokeWidth="2.4" />
+        <polygon points="431,92 440,114 426,114" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
+        <polygon points="431,164 422,142 436,142" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
+        <polygon points="395,128 417,119 417,133" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
+        <polygon points="467,128 445,137 445,123" fill="#78be21" stroke="#1c261a" strokeWidth="1.5" />
       </g>
-      <circle cx="343" cy="124" r="5" fill="#c84b31" stroke="#1c261a" strokeWidth="2" />
+      <circle cx="431" cy="128" r="5.5" fill="#b83a2d" stroke="#1c261a" strokeWidth="2" />
 
-      {/* Wooden Post-and-Rail Farm Fence */}
-      <g stroke="#8d5b2c" strokeWidth="2.5">
-        <line x1="400" y1="196" x2="620" y2="196" />
-        <line x1="400" y1="208" x2="620" y2="208" />
-        <line x1="412" y1="186" x2="412" y2="222" strokeWidth="4" />
-        <line x1="462" y1="186" x2="462" y2="222" strokeWidth="4" />
-        <line x1="512" y1="186" x2="512" y2="222" strokeWidth="4" />
-        <line x1="562" y1="186" x2="562" y2="222" strokeWidth="4" />
-        <line x1="612" y1="186" x2="612" y2="222" strokeWidth="4" />
-      </g>
-
-      {/* Orchard Trees */}
+      {/* Lush Orchard Trees & Wooden Fence */}
       <g>
-        <rect x="77" y="182" width="8" height="30" fill="#7f4f24" />
-        <circle cx="81" cy="166" r="22" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
-        <circle cx="74" cy="160" r="3" fill="#c84b31" />
-        <circle cx="88" cy="168" r="3" fill="#c84b31" />
+        <rect x="156" y="194" width="9" height="36" fill="#6f4518" />
+        <circle cx="160" cy="176" r="25" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
+        <circle cx="151" cy="168" r="3.5" fill="#b83a2d" />
+        <circle cx="170" cy="178" r="3.5" fill="#b83a2d" />
 
-        <rect x="656" y="182" width="8" height="32" fill="#7f4f24" />
-        <circle cx="660" cy="164" r="24" fill="#5a9e18" stroke="#1c261a" strokeWidth="2.2" />
-        <circle cx="694" cy="174" r="18" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
+        <rect x="748" y="196" width="9" height="36" fill="#6f4518" />
+        <circle cx="752" cy="176" r="26" fill="#5e9c16" stroke="#1c261a" strokeWidth="2.2" />
+        <circle cx="786" cy="186" r="20" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
+      </g>
+
+      <g stroke="#8d5b2c" strokeWidth="2.6">
+        <line x1="485" y1="212" x2="725" y2="212" />
+        <line x1="485" y1="224" x2="725" y2="224" />
+        <line x1="498" y1="202" x2="498" y2="238" strokeWidth="4" />
+        <line x1="554" y1="202" x2="554" y2="238" strokeWidth="4" />
+        <line x1="610" y1="202" x2="610" y2="238" strokeWidth="4" />
+        <line x1="666" y1="202" x2="666" y2="238" strokeWidth="4" />
+        <line x1="720" y1="202" x2="720" y2="238" strokeWidth="4" />
       </g>
 
       {/* ====================================================================
-          ZONE 2 (x: 820 - 1340): SCENIC COUNTRYSIDE TO CITY TRANSITION
+          PART 2 (x: 920 - 1440): SCENIC COUNTRY-TO-COAST HIGHWAY TRANSITION
          ==================================================================== */}
-      {/* Roadside Trees & Highway Milestone */}
-      <rect x="920" y="184" width="7" height="32" fill="#7f4f24" />
-      <circle cx="923" cy="168" r="20" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
+      <path d="M880 242C1020 184 1180 188 1340 242H880Z" fill="#eef6e4" />
 
-      {/* Highway Direction Signboard (Visual Arrow Only) */}
-      <rect x="1068" y="176" width="5" height="42" fill="#495057" />
-      <rect x="1046" y="152" width="48" height="26" rx="5" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
-      <path d="M1058 165H1082M1075 158L1082 165L1075 172" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="980" y="196" width="8" height="36" fill="#6f4518" />
+      <circle cx="984" cy="178" r="22" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
 
-      <rect x="1210" y="184" width="7" height="32" fill="#7f4f24" />
-      <circle cx="1213" cy="168" r="20" fill="#5a9e18" stroke="#1c261a" strokeWidth="2.2" />
-
-      {/* ====================================================================
-          ZONE 3 (x: 1340 - 2200): ARCHITECTURAL CITY SKYLINE & ARRIVAL BAY
-         ==================================================================== */}
-      {/* City Streetlamps */}
-      <g stroke="#1c261a" strokeWidth="2.2">
-        <line x1="1380" y1="218" x2="1380" y2="152" />
-        <path d="M1380 152C1380 144 1392 144 1392 150" fill="none" />
-        <circle cx="1392" cy="152" r="4" fill="#ffd166" />
-
-        <line x1="1760" y1="218" x2="1760" y2="152" />
-        <path d="M1760 152C1760 144 1772 144 1772 150" fill="none" />
-        <circle cx="1772" cy="152" r="4" fill="#ffd166" />
-      </g>
-
-      {/* Building 1: Editorial Cream & Sage Apartment */}
-      <rect x="1420" y="96" width="84" height="122" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
-      <rect x="1420" y="96" width="84" height="14" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
-      <g fill="#eef7e1" stroke="#78be21" strokeWidth="1.8">
-        <rect x="1434" y="122" width="16" height="18" rx="2" />
-        <rect x="1472" y="122" width="16" height="18" rx="2" />
-        <rect x="1434" y="150" width="16" height="18" rx="2" />
-        <rect x="1472" y="150" width="16" height="18" rx="2" />
-      </g>
-      <rect x="1452" y="184" width="20" height="34" fill="#d99b52" stroke="#1c261a" strokeWidth="2" />
-
-      {/* Building 2: Tall City Tower */}
-      <rect x="1520" y="54" width="96" height="164" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
-      <rect x="1536" y="42" width="64" height="12" rx="2" fill="#1b4332" stroke="#1c261a" strokeWidth="2" />
-      <g fill="#f3fae8" stroke="#78be21" strokeWidth="1.8">
-        <rect x="1536" y="70" width="18" height="20" rx="2" />
-        <rect x="1582" y="70" width="18" height="20" rx="2" />
-        <rect x="1536" y="102" width="18" height="20" rx="2" />
-        <rect x="1582" y="102" width="18" height="20" rx="2" />
-        <rect x="1536" y="134" width="18" height="20" rx="2" />
-        <rect x="1582" y="134" width="18" height="20" rx="2" />
-      </g>
-      {/* Terracotta Awning */}
-      <path d="M1532 174H1604L1610 188H1526L1532 174Z" fill="#c84b31" stroke="#1c261a" strokeWidth="2" />
-      <rect x="1554" y="188" width="28" height="30" fill="#eef7e1" stroke="#1c261a" strokeWidth="2" />
-
-      {/* Building 3: Neighborhood Market Bay (Destination Stop!) */}
-      <rect x="1636" y="114" width="106" height="104" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
-      {/* Striped Green & Cream Awning */}
-      <path d="M1630 148H1748L1754 166H1624L1630 148Z" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
-      <line x1="1654" y1="148" x2="1652" y2="166" stroke="#ffffff" strokeWidth="4" />
-      <line x1="1688" y1="148" x2="1688" y2="166" stroke="#ffffff" strokeWidth="4" />
-      <line x1="1722" y1="148" x2="1724" y2="166" stroke="#ffffff" strokeWidth="4" />
-      {/* Destination Location Pin above City Bay */}
+      {/* Highway Directional Arrow Sign */}
+      <rect x="1156" y="186" width="6" height="48" fill="#495057" />
+      <rect x="1132" y="158" width="54" height="30" rx="6" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
       <path
-        d="M1689 56C1677 56 1668 65 1668 77C1668 91 1689 108 1689 108C1689 108 1710 91 1710 77C1710 65 1701 56 1689 56Z"
-        fill="#c84b31"
+        d="M1146 173H1172M1164 165L1172 173L1164 181"
+        stroke="#ffffff"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <rect x="1310" y="196" width="8" height="36" fill="#6f4518" />
+      <circle cx="1314" cy="178" r="22" fill="#5e9c16" stroke="#1c261a" strokeWidth="2.2" />
+
+      {/* ====================================================================
+          PART 3 (x: 1460 - 2340): REALISTIC CITY SKYLINE & WATERFRONT BAY
+         ==================================================================== */}
+      {/* Sparkling Waterfront Bay Horizon (Left & Right of City Pier) */}
+      <path d="M1440 212H2360V244H1440V212Z" fill="url(#bayWaterGrad)" />
+      {/* Gentle Water Wave Ripples */}
+      <path d="M1465 224C1480 220 1495 228 1510 224" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.75" />
+      <path d="M2140 222C2158 218 2176 226 2194 222" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.75" />
+      <path d="M2220 232C2238 228 2256 236 2274 232" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.65" />
+
+      {/* Sailboat gliding across the Bay */}
+      <g transform="translate(2165, 162)">
+        <path d="M4 44H56L48 54H12L4 44Z" fill="#b83a2d" stroke="#1c261a" strokeWidth="2" />
+        <line x1="30" y1="8" x2="30" y2="44" stroke="#1c261a" strokeWidth="2.2" />
+        <polygon points="30,10 52,38 30,38" fill="#ffffff" stroke="#1c261a" strokeWidth="2" />
+        <polygon points="27,16 10,38 27,38" fill="#f3fae8" stroke="#1c261a" strokeWidth="1.8" />
+      </g>
+
+      {/* Harbor Lighthouse on Left Breakwater */}
+      <g transform="translate(1474, 114)">
+        <polygon points="14,98 20,24 36,24 42,98" fill="#ffffff" stroke="#1c261a" strokeWidth="2.2" />
+        <polygon points="17,64 39,64 38,48 18,48" fill="#b83a2d" />
+        <rect x="20" y="12" width="16" height="12" fill="#ffd166" stroke="#1c261a" strokeWidth="2" />
+        <polygon points="16,12 28,2 40,12" fill="#b83a2d" stroke="#1c261a" strokeWidth="2" />
+      </g>
+
+      {/* City Promenade & Buildings (Centered at x = 1860 for 100% Arrival!) */}
+      {/* Building A: Modern Glass & Brick City Apartment */}
+      <rect x="1556" y="96" width="92" height="136" rx="4" fill="url(#glassTowerGrad)" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="1556" y="96" width="92" height="14" fill="#1b4332" />
+      <g fill="#ffffff" stroke="#78be21" strokeWidth="1.8">
+        <rect x="1572" y="122" width="18" height="20" rx="2" />
+        <rect x="1614" y="122" width="18" height="20" rx="2" />
+        <rect x="1572" y="152" width="18" height="20" rx="2" />
+        <rect x="1614" y="152" width="18" height="20" rx="2" />
+      </g>
+      <rect x="1590" y="192" width="24" height="40" fill="#d99b52" stroke="#1c261a" strokeWidth="2" />
+
+      {/* Building B: Tall Downtown Skyscraper */}
+      <rect x="1664" y="48" width="104" height="184" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="1682" y="34" width="68" height="14" rx="2" fill="#2b2d42" stroke="#1c261a" strokeWidth="2" />
+      <line x1="1716" y1="14" x2="1716" y2="34" stroke="#1c261a" strokeWidth="2.4" />
+      <g fill="#eef7f2" stroke="#4ea8de" strokeWidth="1.8">
+        <rect x="1682" y="66" width="20" height="22" rx="2" />
+        <rect x="1730" y="66" width="20" height="22" rx="2" />
+        <rect x="1682" y="100" width="20" height="22" rx="2" />
+        <rect x="1730" y="100" width="20" height="22" rx="2" />
+        <rect x="1682" y="134" width="20" height="22" rx="2" />
+        <rect x="1730" y="134" width="20" height="22" rx="2" />
+      </g>
+      <path d="M1676 180H1756L1764 196H1668L1676 180Z" fill="#b83a2d" stroke="#1c261a" strokeWidth="2" />
+      <rect x="1700" y="196" width="32" height="36" fill="#f8f9fa" stroke="#1c261a" strokeWidth="2" />
+
+      {/* Building C: FARM2BAY HARBOR MARKET BAY (Centered at x = 1860!) */}
+      <rect x="1792" y="116" width="136" height="116" rx="5" fill="#ffffff" stroke="#1c261a" strokeWidth="2.5" />
+      {/* Striped Awning */}
+      <path d="M1784 152H1936L1944 172H1776L1784 152Z" fill="#78be21" stroke="#1c261a" strokeWidth="2.2" />
+      <line x1="1814" y1="152" x2="1810" y2="172" stroke="#ffffff" strokeWidth="5" />
+      <line x1="1860" y1="152" x2="1860" y2="172" stroke="#ffffff" strokeWidth="5" />
+      <line x1="1906" y1="152" x2="1910" y2="172" stroke="#ffffff" strokeWidth="5" />
+      {/* Fresh Display Crates outside Market Bay */}
+      <rect x="1806" y="204" width="34" height="26" rx="3" fill="#dfa357" stroke="#1c261a" strokeWidth="2" />
+      <circle cx="1816" cy="200" r="7" fill="#78be21" stroke="#1c261a" strokeWidth="1.8" />
+      <circle cx="1830" cy="200" r="7" fill="#e63946" stroke="#1c261a" strokeWidth="1.8" />
+
+      <rect x="1880" y="204" width="34" height="26" rx="3" fill="#dfa357" stroke="#1c261a" strokeWidth="2" />
+      <circle cx="1890" cy="200" r="7" fill="#f77f00" stroke="#1c261a" strokeWidth="1.8" />
+      <circle cx="1904" cy="200" r="7" fill="#78be21" stroke="#1c261a" strokeWidth="1.8" />
+
+      {/* Destination Location Drop-Pin directly above Bay */}
+      <path
+        d="M1860 54C1847 54 1837 64 1837 77C1837 93 1860 111 1860 111C1860 111 1883 93 1883 77C1883 64 1873 54 1860 54Z"
+        fill="#b83a2d"
         stroke="#1c261a"
         strokeWidth="2.4"
       />
-      <circle cx="1689" cy="76" r="7" fill="#ffffff" />
+      <circle cx="1860" cy="76" r="7.5" fill="#ffffff" />
 
-      {/* Right Edge City Buildings */}
-      <rect x="1804" y="82" width="88" height="136" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
-      <g fill="#eef7e1" stroke="#78be21" strokeWidth="1.8">
-        <rect x="1820" y="102" width="18" height="22" rx="2" />
-        <rect x="1858" y="102" width="18" height="22" rx="2" />
-        <rect x="1820" y="138" width="18" height="22" rx="2" />
-        <rect x="1858" y="138" width="18" height="22" rx="2" />
+      {/* Building D: Harborfront Office */}
+      <rect x="1952" y="84" width="96" height="148" rx="4" fill="url(#glassTowerGrad)" stroke="#1c261a" strokeWidth="2.4" />
+      <g fill="#ffffff" stroke="#78be21" strokeWidth="1.8">
+        <rect x="1970" y="106" width="20" height="24" rx="2" />
+        <rect x="2010" y="106" width="20" height="24" rx="2" />
+        <rect x="1970" y="144" width="20" height="24" rx="2" />
+        <rect x="2010" y="144" width="20" height="24" rx="2" />
       </g>
-      <rect x="1910" y="118" width="96" height="100" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
     </svg>
   );
 }
 
 /* =========================================================
-   3. VINTAGE TWO-TONE PICKUP TRUCK (FIXED CENTER + SPINNING WHEELS)
+   3. REALISTIC HERITAGE RED & CREAM PICKUP TRUCK (NO GREEN BODY)
    ========================================================= */
 export function FarmTruckIllustration({ className = '' }) {
   return (
     <svg
-      viewBox="0 0 390 196"
+      viewBox="0 0 400 202"
       className={className}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Farm2Bay Delivery Pickup Truck"
+      aria-label="Farm2Bay Heritage Pickup Truck"
     >
       <defs>
-        <linearGradient id="truckBodyGrad" x1="0" y1="60" x2="0" y2="150" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#4c855e" />
-          <stop offset="55%" stopColor="#356344" />
-          <stop offset="100%" stopColor="#244730" />
+        {/* Realistic Glossy Heritage Cherry-Red Metallic Body Gradient */}
+        <linearGradient id="redTruckBody" x1="0" y1="52" x2="0" y2="152" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#d94e3f" />
+          <stop offset="48%" stopColor="#b83a2d" />
+          <stop offset="100%" stopColor="#7f2017" />
         </linearGradient>
-        <linearGradient id="headlightBeam" x1="342" y1="114" x2="390" y2="122" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#ffd166" stopOpacity="0.55" />
+
+        {/* Chrome Metallic Gradient */}
+        <linearGradient id="chromeMetal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="50%" stopColor="#ced4da" />
+          <stop offset="100%" stopColor="#868e96" />
+        </linearGradient>
+
+        {/* Glass Window Reflection */}
+        <linearGradient id="cabGlassGrad" x1="190" y1="64" x2="264" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#e8f6f8" />
+          <stop offset="55%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#cde6ec" />
+        </linearGradient>
+
+        {/* Headlight Warm Beam */}
+        <linearGradient id="headlightCone" x1="348" y1="116" x2="400" y2="124" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ffd166" stopOpacity="0.6" />
           <stop offset="100%" stopColor="#ffd166" stopOpacity="0" />
         </linearGradient>
       </defs>
 
-      {/* Subtle Headlight Glow Cone */}
-      <polygon points="340,106 390,94 390,136 340,122" fill="url(#headlightBeam)" />
+      {/* Headlight Beam */}
+      <polygon points="346,108 400,94 400,140 346,126" fill="url(#headlightCone)" />
 
-      {/* Exhaust Smoke Puffs */}
-      <circle className="exhaust-puff puff-1" cx="28" cy="148" r="6" fill="#d8e2dc" />
-      <circle className="exhaust-puff puff-2" cx="14" cy="140" r="9" fill="#e9ecef" />
-      <circle className="exhaust-puff puff-3" cx="4" cy="131" r="11" fill="#f1f3f5" />
+      {/* Exhaust Puffs */}
+      <circle className="exhaust-puff puff-1" cx="28" cy="152" r="6" fill="#dee2e6" />
+      <circle className="exhaust-puff puff-2" cx="14" cy="144" r="9" fill="#e9ecef" />
+      <circle className="exhaust-puff puff-3" cx="4" cy="135" r="11" fill="#f1f3f5" />
 
-      {/* Ground Contact Shadow */}
-      <ellipse cx="192" cy="178" rx="154" ry="8" fill="#1c261a" fillOpacity="0.18" />
+      {/* Realistic Ground Contact Shadow */}
+      <ellipse cx="196" cy="183" rx="160" ry="8.5" fill="#1c261a" fillOpacity="0.22" />
 
-      {/* Loaded Harvest Goods in Truck Bed */}
+      {/* Farm Goods Loaded in Truck Bed */}
       <g className="truck-cargo">
         {/* Fresh Glass Milk Bottles */}
-        <rect x="64" y="54" width="22" height="38" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
+        <rect x="64" y="54" width="22" height="40" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
         <rect x="68" y="47" width="14" height="8" rx="2" fill="#78be21" stroke="#1c261a" strokeWidth="2" />
-        {/* Terracotta Pickle Jar */}
-        <rect x="92" y="60" width="26" height="32" rx="6" fill="#c84b31" stroke="#1c261a" strokeWidth="2.4" />
+        <rect x="68" y="68" width="14" height="14" rx="2" fill="#eef7e1" />
+
+        {/* Terracotta & Spice Jar */}
+        <rect x="92" y="60" width="26" height="34" rx="6" fill="#e07a5f" stroke="#1c261a" strokeWidth="2.4" />
         <rect x="95" y="54" width="20" height="7" rx="2" fill="#f4a261" stroke="#1c261a" strokeWidth="2" />
-        {/* Leafy Farm Vegetables & Carrots */}
-        <circle cx="134" cy="68" r="17" fill="#78be21" stroke="#1c261a" strokeWidth="2.4" />
-        <circle cx="151" cy="73" r="14" fill="#558b15" stroke="#1c261a" strokeWidth="2.4" />
-        <path d="M123 53C120 41 129 37 134 48" stroke="#2d6a4f" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M144 58L152 43" stroke="#f77f00" strokeWidth="4" strokeLinecap="round" />
+
+        {/* Fresh Organic Greens & Carrots */}
+        <circle cx="136" cy="69" r="18" fill="#78be21" stroke="#1c261a" strokeWidth="2.4" />
+        <circle cx="154" cy="74" r="14" fill="#558b15" stroke="#1c261a" strokeWidth="2.4" />
+        <path d="M124 53C121 40 130 36 135 48" stroke="#2d6a4f" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M146 59L155 43" stroke="#f77f00" strokeWidth="4.5" strokeLinecap="round" />
       </g>
 
-      {/* Golden Oak Wooden Bed Slats */}
-      <rect x="48" y="76" width="128" height="10" rx="2" fill="#e0a458" stroke="#1c261a" strokeWidth="2.4" />
-      <rect x="48" y="91" width="128" height="10" rx="2" fill="#c68136" stroke="#1c261a" strokeWidth="2.4" />
-      <rect x="58" y="73" width="8" height="35" fill="#b36d25" stroke="#1c261a" strokeWidth="2" />
-      <rect x="112" y="73" width="8" height="35" fill="#b36d25" stroke="#1c261a" strokeWidth="2" />
-      <rect x="160" y="73" width="8" height="35" fill="#b36d25" stroke="#1c261a" strokeWidth="2" />
+      {/* Golden Oak Wooden Stake-Bed Planks with Bolts */}
+      <rect x="48" y="77" width="132" height="11" rx="2" fill="#e5aa5c" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="48" y="93" width="132" height="11" rx="2" fill="#c88336" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="58" y="74" width="9" height="36" fill="#b36d25" stroke="#1c261a" strokeWidth="2" />
+      <rect x="114" y="74" width="9" height="36" fill="#b36d25" stroke="#1c261a" strokeWidth="2" />
+      <rect x="164" y="74" width="9" height="36" fill="#b36d25" stroke="#1c261a" strokeWidth="2" />
+      {/* Metal Rivet Bolts */}
+      <circle cx="62.5" cy="82.5" r="1.5" fill="#1c261a" />
+      <circle cx="118.5" cy="82.5" r="1.5" fill="#1c261a" />
+      <circle cx="168.5" cy="82.5" r="1.5" fill="#1c261a" />
 
-      {/* Exhaust Pipe */}
-      <path d="M36 144H48V150H36C34 150 34 144 36 144Z" fill="#adb5bd" stroke="#1c261a" strokeWidth="2" />
+      {/* Exhaust Tailpipe */}
+      <path d="M36 148H48V154H36C34 154 34 148 36 148Z" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="2" />
 
-      {/* Vintage Two-Tone Pickup Body (Deep Sage-Forest Green) */}
+      {/* Main Vintage Pickup Truck Body (Glossy Heritage Red) */}
       <path
-        d="M44 106H178V64C178 55 185 48 194 48H240C251 48 259 55 264 66L275 94H324C335 94 344 103 344 114V146H44V106Z"
-        fill="url(#truckBodyGrad)"
+        d="M44 108H182V64C182 55 189 48 198 48H245C256 48 265 55 270 66L282 96H332C343 96 352 105 352 116V150H44V108Z"
+        fill="url(#redTruckBody)"
         stroke="#1c261a"
         strokeWidth="3"
         strokeLinejoin="round"
       />
 
-      {/* Classic Cream Two-Tone Cab Roof */}
+      {/* Classic Warm Cream Two-Tone Cab Roof */}
       <path
-        d="M180 63C180 55 186 49 194 49H240C250 49 258 55 263 65H180V63Z"
+        d="M184 64C184 55 190 49 198 49H245C255 49 264 55 269 65H184V64Z"
         fill="#faf6ee"
         stroke="#1c261a"
         strokeWidth="2.4"
       />
 
-      {/* Cab Window + Driver Silhouette */}
+      {/* Cab Window + Diagonal Glass Glare + Driver */}
       <path
-        d="M190 65H242C248 65 253 69 256 75L263 92H190V65Z"
-        fill="#eef7f2"
+        d="M194 66H247C253 66 258 70 261 76L268 94H194V66Z"
+        fill="url(#cabGlassGrad)"
         stroke="#1c261a"
         strokeWidth="2.4"
         strokeLinejoin="round"
       />
-      {/* Driver Head & Cap inside Cab */}
-      <circle cx="234" cy="79" r="6.5" fill="#f2c6a0" stroke="#1c261a" strokeWidth="1.8" />
-      <path d="M227 76C227 71 231 69 235 69C239 69 242 71 242 76H227Z" fill="#c84b31" />
-      <line x1="241" y1="76" x2="246" y2="76" stroke="#c84b31" strokeWidth="2.2" strokeLinecap="round" />
-      <line x1="222" y1="65" x2="222" y2="92" stroke="#1c261a" strokeWidth="2.2" />
+      {/* Diagonal Glass Highlight */}
+      <polygon points="202,68 212,68 204,92 196,92" fill="#ffffff" fillOpacity="0.65" />
+
+      {/* Driver Silhouette */}
+      <circle cx="240" cy="80" r="6.5" fill="#f2c6a0" stroke="#1c261a" strokeWidth="1.8" />
+      <path d="M233 77C233 72 237 70 241 70C245 70 248 72 248 77H233Z" fill="#1b4332" />
+      <line x1="247" y1="77" x2="252" y2="77" stroke="#1b4332" strokeWidth="2.2" strokeLinecap="round" />
+      <line x1="227" y1="66" x2="227" y2="94" stroke="#1c261a" strokeWidth="2.2" />
 
       {/* Chrome Side Mirror */}
-      <rect x="256" y="76" width="6" height="11" rx="2" fill="#e9ecef" stroke="#1c261a" strokeWidth="1.8" />
+      <rect x="262" y="77" width="6" height="12" rx="2" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="1.8" />
 
-      {/* Cream Side Trim & Door Handle */}
-      <path d="M52 122H336" stroke="#faf6ee" strokeWidth="3.5" />
-      <path d="M52 122H336" stroke="#1c261a" strokeWidth="1.2" />
-      <rect x="198" y="106" width="12" height="4" rx="2" fill="#e9ecef" stroke="#1c261a" strokeWidth="1.5" />
+      {/* Cream Two-Tone Side Spear Trim & Chrome Door Handle */}
+      <path d="M52 125H344" stroke="#faf6ee" strokeWidth="4.5" />
+      <path d="M52 125H344" stroke="#1c261a" strokeWidth="1.2" />
+      <rect x="202" y="109" width="13" height="4.5" rx="2" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="1.5" />
 
-      {/* Fender Arches */}
+      {/* Sculpted Fender Wheel Arches */}
       <path
-        d="M70 146C70 128 84 116 100 116C116 116 130 128 130 146"
+        d="M70 150C70 131 85 118 102 118C119 118 134 131 134 150"
         fill="#1c261a"
         stroke="#faf6ee"
-        strokeWidth="2.5"
+        strokeWidth="2.8"
       />
       <path
-        d="M254 146C254 128 268 116 284 116C300 116 314 128 314 146"
+        d="M258 150C258 131 273 118 290 118C307 118 322 131 322 150"
         fill="#1c261a"
         stroke="#faf6ee"
-        strokeWidth="2.5"
+        strokeWidth="2.8"
       />
 
-      {/* Chrome Front & Rear Bumpers + Headlight */}
-      <rect x="36" y="137" width="15" height="11" rx="5" fill="#e9ecef" stroke="#1c261a" strokeWidth="2.4" />
-      <rect x="334" y="137" width="17" height="11" rx="5" fill="#e9ecef" stroke="#1c261a" strokeWidth="2.4" />
-      <rect x="336" y="106" width="9" height="15" rx="4" fill="#ffd166" stroke="#1c261a" strokeWidth="2.2" />
+      {/* Chrome Bumpers, Front Grille Accent & Amber Headlight */}
+      <rect x="36" y="140" width="16" height="12" rx="5" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="342" y="140" width="18" height="12" rx="5" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="344" y="108" width="9" height="16" rx="4" fill="#ffd166" stroke="#1c261a" strokeWidth="2.2" />
 
       {/* Rear Spinning Whitewall Wheel */}
-      <g className="wheel-spin" style={{ transformOrigin: '100px 148px' }}>
-        <circle cx="100" cy="148" r="25" fill="#212529" stroke="#1c261a" strokeWidth="3" />
-        {/* Tire Tread Notches */}
+      <g className="wheel-spin" style={{ transformOrigin: '102px 152px' }}>
+        <circle cx="102" cy="152" r="26" fill="#212529" stroke="#1c261a" strokeWidth="3" />
         <circle
-          cx="100"
-          cy="148"
-          r="22"
+          cx="102"
+          cy="152"
+          r="23"
           stroke="#495057"
           strokeWidth="2.5"
           strokeDasharray="5 5"
         />
-        {/* Cream Whitewall */}
-        <circle cx="100" cy="148" r="15.5" fill="#faf6ee" stroke="#1c261a" strokeWidth="2" />
-        {/* Sage-Green Rim & Chrome Hubcap */}
-        <circle cx="100" cy="148" r="9.5" fill="#3a6b4c" stroke="#1c261a" strokeWidth="2" />
-        <circle cx="100" cy="148" r="4.5" fill="#e9ecef" stroke="#1c261a" strokeWidth="1.6" />
-        <line x1="100" y1="133" x2="100" y2="163" stroke="#1c261a" strokeWidth="1.6" />
-        <line x1="85" y1="148" x2="115" y2="148" stroke="#1c261a" strokeWidth="1.6" />
+        <circle cx="102" cy="152" r="16" fill="#faf6ee" stroke="#1c261a" strokeWidth="2" />
+        <circle cx="102" cy="152" r="10" fill="#b83a2d" stroke="#1c261a" strokeWidth="2" />
+        <circle cx="102" cy="152" r="4.8" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="1.6" />
+        <line x1="102" y1="136" x2="102" y2="168" stroke="#1c261a" strokeWidth="1.6" />
+        <line x1="86" y1="152" x2="118" y2="152" stroke="#1c261a" strokeWidth="1.6" />
       </g>
 
       {/* Front Spinning Whitewall Wheel */}
-      <g className="wheel-spin" style={{ transformOrigin: '284px 148px' }}>
-        <circle cx="284" cy="148" r="25" fill="#212529" stroke="#1c261a" strokeWidth="3" />
+      <g className="wheel-spin" style={{ transformOrigin: '290px 152px' }}>
+        <circle cx="290" cy="152" r="26" fill="#212529" stroke="#1c261a" strokeWidth="3" />
         <circle
-          cx="284"
-          cy="148"
-          r="22"
+          cx="290"
+          cy="152"
+          r="23"
           stroke="#495057"
           strokeWidth="2.5"
           strokeDasharray="5 5"
         />
-        <circle cx="284" cy="148" r="15.5" fill="#faf6ee" stroke="#1c261a" strokeWidth="2" />
-        <circle cx="284" cy="148" r="9.5" fill="#3a6b4c" stroke="#1c261a" strokeWidth="2" />
-        <circle cx="284" cy="148" r="4.5" fill="#e9ecef" stroke="#1c261a" strokeWidth="1.6" />
-        <line x1="284" y1="133" x2="284" y2="163" stroke="#1c261a" strokeWidth="1.6" />
-        <line x1="269" y1="148" x2="299" y2="148" stroke="#1c261a" strokeWidth="1.6" />
+        <circle cx="290" cy="152" r="16" fill="#faf6ee" stroke="#1c261a" strokeWidth="2" />
+        <circle cx="290" cy="152" r="10" fill="#b83a2d" stroke="#1c261a" strokeWidth="2" />
+        <circle cx="290" cy="152" r="4.8" fill="url(#chromeMetal)" stroke="#1c261a" strokeWidth="1.6" />
+        <line x1="290" y1="136" x2="290" y2="168" stroke="#1c261a" strokeWidth="1.6" />
+        <line x1="274" y1="152" x2="306" y2="152" stroke="#1c261a" strokeWidth="1.6" />
       </g>
     </svg>
   );
@@ -525,7 +600,7 @@ export function WoodenCrateHeroIllustration() {
         strokeLinecap="round"
       />
 
-      <rect x="272" y="108" width="48" height="68" rx="12" fill="#c84b31" stroke="#1c261a" strokeWidth="2.8" />
+      <rect x="272" y="108" width="48" height="68" rx="12" fill="#b83a2d" stroke="#1c261a" strokeWidth="2.8" />
       <rect x="278" y="96" width="36" height="13" rx="4" fill="#f4a261" stroke="#1c261a" strokeWidth="2.5" />
       <rect x="280" y="128" width="32" height="22" rx="4" fill="#ffffff" stroke="#1c261a" strokeWidth="1.8" />
 
@@ -581,7 +656,7 @@ export function PackingStepIllustration() {
       <circle cx="90" cy="70" r="56" fill="#f3fae8" />
       <rect x="52" y="42" width="24" height="48" rx="6" fill="#ffffff" stroke="#1c261a" strokeWidth="2.4" />
       <rect x="56" y="33" width="16" height="9" rx="3" fill="#78be21" stroke="#1c261a" strokeWidth="2" />
-      <rect x="82" y="48" width="30" height="42" rx="8" fill="#c84b31" stroke="#1c261a" strokeWidth="2.4" />
+      <rect x="82" y="48" width="30" height="42" rx="8" fill="#b83a2d" stroke="#1c261a" strokeWidth="2.4" />
       <rect x="86" y="40" width="22" height="8" rx="3" fill="#f4a261" stroke="#1c261a" strokeWidth="2" />
       <rect x="44" y="84" width="92" height="14" rx="3" fill="#dda15e" stroke="#1c261a" strokeWidth="2.4" />
       <rect x="44" y="102" width="92" height="14" rx="3" fill="#bc6c25" stroke="#1c261a" strokeWidth="2.4" />
@@ -594,8 +669,8 @@ export function DeliveryPartnerIllustration() {
     <svg viewBox="0 0 180 140" className="step-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="90" cy="70" r="56" fill="#f3fae8" />
       <circle cx="90" cy="48" r="18" fill="#f7cbb0" stroke="#1c261a" strokeWidth="2.4" />
-      <path d="M72 44C72 32 80 25 90 25C100 25 108 32 108 44H72Z" fill="#c84b31" stroke="#1c261a" strokeWidth="2.4" />
-      <path d="M74 44H116C116 48 107 50 94 50" fill="#9e351e" stroke="#1c261a" strokeWidth="2" />
+      <path d="M72 44C72 32 80 25 90 25C100 25 108 32 108 44H72Z" fill="#b83a2d" stroke="#1c261a" strokeWidth="2.4" />
+      <path d="M74 44H116C116 48 107 50 94 50" fill="#852117" stroke="#1c261a" strokeWidth="2" />
       <circle cx="84" cy="49" r="2" fill="#1c261a" />
       <circle cx="96" cy="49" r="2" fill="#1c261a" />
       <path d="M85 56C88 59 92 59 95 56" stroke="#1c261a" strokeWidth="2" strokeLinecap="round" />
