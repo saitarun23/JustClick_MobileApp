@@ -1,7 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { CATEGORIES, PRODUCTS } from './data/products';
 import {
+  BasketIcon,
+  Farm2BayLogoMark,
   ProductIllustration,
+  ReplayIcon,
   WoodenCrateHeroIllustration,
 } from './components/Illustrations';
 import SplashScreen from './components/SplashScreen';
@@ -57,13 +60,13 @@ export default function App() {
     <div className="app-shell">
       {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
 
-      {/* Sticky Header */}
+      {/* Sticky Pure White Header */}
       <header className="navbar">
         <div className="container nav-inner">
           <a href="#top" className="brand-logo">
-            <span className="brand-badge">🌿</span>
+            <Farm2BayLogoMark size={38} />
             <span className="brand-text">
-              Farm<strong>2</strong>Bay
+              FARM<strong>2</strong>BAY
             </span>
           </a>
 
@@ -74,9 +77,9 @@ export default function App() {
               type="button"
               className="replay-btn"
               onClick={() => setShowSplash(true)}
-              title="Replay Farm-to-City Truck Intro"
             >
-              🚚 Replay Intro
+              <ReplayIcon />
+              <span>Replay Intro</span>
             </button>
           </nav>
 
@@ -85,16 +88,16 @@ export default function App() {
             className="cart-trigger-btn"
             onClick={() => setCartOpen(true)}
           >
-            <span>🧺 Basket</span>
+            <BasketIcon />
+            <span>Basket</span>
             <span className="cart-count-pill">{totalCount}</span>
           </button>
         </div>
       </header>
 
-      {/* Main Hero Banner (City Skyline Line-Art + Hands Holding Crate) */}
+      {/* Main Hero Banner on Pure White Background */}
       <main id="top">
         <section className="hero-section">
-          <div className="city-backdrop-pattern" aria-hidden="true" />
           <div className="container hero-grid">
             <div className="hero-copy">
               <span className="eyebrow-tag">DIRECT FARMER&apos;S MARKET • CITY DELIVERY</span>
@@ -230,18 +233,21 @@ export default function App() {
           </div>
         </section>
 
-        {/* How It Works Visual Story */}
+        {/* How It Works Section */}
         <HowItWorks />
       </main>
 
       {/* Footer */}
       <footer className="site-footer">
         <div className="container footer-inner">
-          <div>
-            <span className="brand-text footer-brand">
-              Farm<strong>2</strong>Bay
-            </span>
-            <p>Connecting rural farmers directly with city kitchens every morning.</p>
+          <div className="footer-brand-wrap">
+            <Farm2BayLogoMark size={34} />
+            <div>
+              <span className="brand-text footer-brand">
+                FARM<strong>2</strong>BAY
+              </span>
+              <p>Connecting rural farmers directly with city kitchens every morning.</p>
+            </div>
           </div>
           <p className="footer-note">
             Dairy Products • Vegetables • Pickles • Powdered Products • Farm Essentials

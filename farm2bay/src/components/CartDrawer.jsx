@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckBadgeIcon, FarmTruckIllustration } from './Illustrations';
 
 export default function CartDrawer({
   isOpen,
@@ -34,19 +35,26 @@ export default function CartDrawer({
             <p className="drawer-sub">Direct farm dispatch in eco crates & glass jars</p>
           </div>
           <button type="button" className="icon-close-btn" onClick={onClose} aria-label="Close">
-            ✕
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
 
-        {/* Free Delivery Progress */}
         <div className="delivery-meter">
-          {remainingForFree === 0 ? (
-            <span>🎉 You unlocked FREE Farm-to-City Truck Delivery!</span>
-          ) : (
-            <span>
-              Add <strong>₹{remainingForFree}</strong> more for FREE city delivery
-            </span>
-          )}
+          <div className="meter-label-row">
+            {remainingForFree === 0 ? (
+              <span className="meter-unlocked">
+                <CheckBadgeIcon size={16} />
+                Free Farm-to-City Truck Delivery unlocked
+              </span>
+            ) : (
+              <span>
+                Add <strong>₹{remainingForFree}</strong> more for free city delivery
+              </span>
+            )}
+          </div>
           <div className="meter-bar">
             <div
               className="meter-fill"
@@ -59,8 +67,8 @@ export default function CartDrawer({
 
         {orderPlaced ? (
           <div className="order-success-box">
-            <div className="success-badge">🚚</div>
-            <h4>Order Dispatched to Farm!</h4>
+            <FarmTruckIllustration className="success-truck-svg" />
+            <h4>Order Dispatched to Farm</h4>
             <p>
               Our Farm2Bay truck will load your fresh basket for the next city delivery slot.
             </p>

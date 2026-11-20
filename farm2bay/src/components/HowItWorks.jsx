@@ -1,5 +1,10 @@
 import React from 'react';
-import { DeliveryPartnerIllustration, FarmTruckIllustration } from './Illustrations';
+import {
+  DeliveryPartnerIllustration,
+  FarmTruckIllustration,
+  HarvestStepIllustration,
+  PackingStepIllustration,
+} from './Illustrations';
 
 export default function HowItWorks() {
   return (
@@ -17,7 +22,7 @@ export default function HowItWorks() {
         <div className="steps-grid">
           <article className="step-card">
             <span className="step-num">01</span>
-            <div className="step-icon-box">🌾</div>
+            <HarvestStepIllustration />
             <h3>Morning Farm Harvest</h3>
             <p>
               Fresh A2 milk is bottled at dawn, vegetables are hand-picked, and pickles & spice
@@ -27,7 +32,7 @@ export default function HowItWorks() {
 
           <article className="step-card">
             <span className="step-num">02</span>
-            <div className="step-icon-box">🧺</div>
+            <PackingStepIllustration />
             <h3>Packed in Wooden Crates & Jars</h3>
             <p>
               We pack dairy and pickles in reusable glass jars and bundle fresh produce in
