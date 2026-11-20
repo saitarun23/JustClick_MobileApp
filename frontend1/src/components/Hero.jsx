@@ -6,7 +6,7 @@ const slides = [
     kicker: "A Pure",
     title: "A2 Cow Ghee",
     sub: "Slow-churned the traditional way for rich aroma and golden taste.",
-    bg: "linear-gradient(120deg,#ffe9f1 0%,#ffc9de 100%)",
+    bg: "linear-gradient(120deg,#F1F8E4 0%,#CFE8A0 100%)",
     perks: [[Leaf, "Farm Fresh"], [Droplets, "Slow Churned"], [ShieldCheck, "No Preservatives"]],
     btn: "Shop Dairy",
   },
@@ -14,7 +14,7 @@ const slides = [
     kicker: "Homemade",
     title: "Sun-Matured Pickles",
     sub: "Cold-pressed oil, hand-ground spices and zero preservatives.",
-    bg: "linear-gradient(120deg,#fff0f5 0%,#ffbfd8 100%)",
+    bg: "linear-gradient(120deg,#F6FBEA 0%,#C2E38A 100%)",
     perks: [[Citrus, "Raw Mangoes"], [Flame, "Bold Spice"], [Sprout, "Small Batch"]],
     btn: "Shop Pickles",
   },
@@ -22,7 +22,7 @@ const slides = [
     kicker: "Freshly Ground",
     title: "Stone-Ground Powders",
     sub: "Turmeric, chilli, podis and health mixes, made every week.",
-    bg: "linear-gradient(120deg,#ffeef4 0%,#ffb3d1 100%)",
+    bg: "linear-gradient(120deg,#F3F9E8 0%,#B5DB78 100%)",
     perks: [[Wheat, "Stone Ground"], [Leaf, "100% Natural"], [Gift, "Gift Ready"]],
     btn: "Shop Powders",
   },
@@ -60,7 +60,7 @@ export default function Hero() {
 
             <div className="hero-img">
               <img
-                src={`https://placehold.co/560x520/fff5f9/b0335f?text=${encodeURIComponent(s.title)}`}
+                src={`https://placehold.co/560x520/F8FCF0/3F6A0C?text=${encodeURIComponent(s.title)}`}
                 alt={s.title}
               />
             </div>

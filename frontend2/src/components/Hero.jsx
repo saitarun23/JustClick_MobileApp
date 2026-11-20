@@ -12,13 +12,13 @@ export default function Hero({ query, setQuery }) {
           <h1>Hungry?<br />Click.<br />Done.</h1>
           <p>Meals, fruit and midnight cravings from shops in your area. At your door in about 20 minutes.</p>
         </div>
-        <aside className="live" aria-label="Example live order">
+        {/* <aside className="live" aria-label="Example live order">
           <div className="live-head"><span className="pulse" /> Order #2481 is on the way</div>
           <div className="route">
             <LuStore /><div className="bar"><i /><LuBike className="rider" /></div><LuHouse />
           </div>
           <div className="live-foot"><b>Arriving in 12 min</b><span>Rider: Tarun</span></div>
-        </aside>
+        </aside> */}
       </div>
       <label className="search">
         <LuSearch />

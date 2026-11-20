@@ -1,13 +1,13 @@
 import Carousel from "./Carousel";
 
 const cats = [
-  { name: "Dairy", bg: "ffe9f1" },
-  { name: "Powders", bg: "ffd9e8" },
-  { name: "Pickles", bg: "ffc9de" },
-  { name: "Spices", bg: "ffdce9" },
-  { name: "Honey & Oils", bg: "fbe0ec" },
-  { name: "Snacks", bg: "ffd2e4" },
-  { name: "Combos", bg: "ffe3ee" },
+  { name: "Dairy", bg: "EAF5D8" },
+  { name: "Powders", bg: "DFF0C2" },
+  { name: "Pickles", bg: "D4EAAE" },
+  { name: "Spices", bg: "E3F2CB" },
+  { name: "Honey & Oils", bg: "E8F3D3" },
+  { name: "Snacks", bg: "DBEDBA" },
+  { name: "Combos", bg: "EDF6DD" },
 ];
 
 export default function Categories() {
@@ -19,7 +19,7 @@ export default function Categories() {
           <a href="#" className="cat-card" key={c.name}>
             <div className="cat-frame">
               <img
-                src={`https://placehold.co/400x440/${c.bg}/b0335f?text=${encodeURIComponent(c.name)}`}
+                src={`https://placehold.co/400x440/${c.bg}/3F6A0C?text=${encodeURIComponent(c.name)}`}
                 alt={c.name}
               />
             </div>
