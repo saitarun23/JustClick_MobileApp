@@ -416,13 +416,22 @@ export function NearLayer() {
       <Tree x={1800} s={1.1} />
       <Tree x={2120} s={0.9} dark />
       <g transform="translate(1980 470)">
-        <rect x="-46" y="-52" width="6" height="52" fill="#aab2b8" />
-        <rect x="40" y="-52" width="6" height="52" fill="#aab2b8" />
-        <rect x="-80" y="-124" width="160" height="76" rx="5" fill="#1d7a4b" stroke="#fff" strokeWidth="3" />
-        <text x="-6" y="-88" textAnchor="middle" className="sp-svgtext" fontSize="30" fill="#fff">CITY</text>
-        <text x="-6" y="-62" textAnchor="middle" className="sp-svgtext" fontSize="20" fill="#fff">12 km</text>
-        <path d="M46 -86 H62 M55 -93 L63 -86 L55 -79" stroke="#fff" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
+  <rect x="-46" y="-52" width="6" height="52" fill="#aab2b8" />
+  <rect x="40" y="-52" width="6" height="52" fill="#aab2b8" />
+  <rect x="-80" y="-124" width="160" height="76" rx="5" fill="#1d7a4b" stroke="#fff" strokeWidth="3" />
+  <g fill="#fff">
+    <rect x="-62" y="-92" width="14" height="32" />
+    <rect x="-44" y="-108" width="18" height="48" />
+    <rect x="-22" y="-84" width="14" height="24" />
+  </g>
+  <g fill="#1d7a4b">
+    <rect x="-40" y="-100" width="4" height="6" />
+    <rect x="-32" y="-100" width="4" height="6" />
+    <rect x="-40" y="-88" width="4" height="6" />
+    <rect x="-32" y="-88" width="4" height="6" />
+  </g>
+  <path d="M10 -86 H56 M44 -97 L58 -86 L44 -75" stroke="#fff" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+</g>
 
       {/* ===== OUTSKIRTS ===== */}
       <g transform="translate(2600 470)">
@@ -438,14 +447,13 @@ export function NearLayer() {
       <House x={2740} y={470} w={110} wall="#efe2c6" roof="#a8483a" />
       <Tree x={2880} s={0.9} />
       <g transform="translate(3000 470)">
-        <rect x="-80" y="-120" width="8" height="120" fill="#6b7178" />
-        <rect x="72" y="-120" width="8" height="120" fill="#6b7178" />
-        <rect x="-100" y="-210" width="200" height="92" rx="4" fill="#f7f1dc" stroke="#5b6168" strokeWidth="4" />
-        <rect x="-100" y="-210" width="200" height="26" fill="#78be21" />
-        <text x="0" y="-191" textAnchor="middle" className="sp-svgtext" fontSize="18" fill="#fff" letterSpacing="2">FARM FRESH</text>
-        <text x="0" y="-152" textAnchor="middle" className="sp-svgtext" fontSize="26" fill="#174a37">Delivered daily</text>
-        <text x="0" y="-130" textAnchor="middle" className="sp-svgtext" fontSize="14" fill="#4f6b3a">Order on farm2bay</text>
-      </g>
+  <rect x="-80" y="-120" width="8" height="120" fill="#6b7178" />
+  <rect x="72" y="-120" width="8" height="120" fill="#6b7178" />
+  <rect x="-100" y="-210" width="200" height="92" rx="4" fill="#f7f1dc" stroke="#5b6168" strokeWidth="4" />
+  <rect x="-100" y="-210" width="200" height="92" rx="4" fill="#78be21" opacity=".2" />
+  <path d="M-34 -140 C-46 -178 -12 -200 34 -196 C38 -158 6 -134 -34 -140 Z" fill="#78be21" />
+  <path d="M-32 -142 L26 -190" stroke="#f7f1dc" strokeWidth="3" />
+</g>
       {[2680, 2940, 3200].map((x) => <Lamp key={x} x={x} />)}
 
       {/* ===== CITY ===== */}
@@ -457,7 +465,12 @@ export function NearLayer() {
       <Person x={3330} shirt="#c24d36" />
       <Person x={4232} shirt="#3d7ea6" pants="#4a4a52" hair="#5a3a1f" />
       <Person x={4470} shirt="#78be21" pants="#2f3a48" skin="#b9855f" />
-
+      <g transform="translate(4072 236)">
+  <g className="sp-pin">
+    <path d="M0 0 C-22 -26 -30 -40 -30 -56 A30 30 0 1 1 30 -56 C30 -40 22 -26 0 0 Z" fill="#f26b21" stroke="#fff" strokeWidth="4" />
+    <circle cy="-56" r="11" fill="#fff" />
+  </g>
+</g>
       {/* ===== ROAD ===== */}
       <rect y="478" width="4800" height="107" fill="url(#gRoad)" />
       <rect y="585" width="4800" height="15" fill="url(#gGround)" />

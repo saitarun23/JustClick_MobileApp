@@ -83,7 +83,6 @@
 .sp--leave .sp-bar--bottom { transform: translateY(100%); }
 
 /* ---------- brand ---------- */
-.sp-brand { position: absolute; top: 11vh; left: 50%; z-index: 6; text-align: center; transform: translateX(-50%); opacity: 0; animation: sp-rise .9s .4s ease forwards; }
 .sp-brand__mark { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 18px; background: var(--g); color: #fff; box-shadow: 0 8px 22px rgba(79, 138, 18, .4); margin-bottom: 6px; }
 .sp-brand h1 { font-family: 'Baloo 2', sans-serif; font-weight: 800; line-height: 1; font-size: clamp(2.2rem, 6vw, 4rem); color: #0f3d2a; text-shadow: 0 2px 0 rgba(255, 255, 255, .55), 0 6px 24px rgba(15, 61, 42, .25); }
 .sp-brand p { margin-top: 4px; font-weight: 700; color: #1d5a3c; text-shadow: 0 1px 8px rgba(255, 255, 255, .7); }
@@ -135,3 +134,5 @@
 @media (prefers-reduced-motion: reduce) {
   .sp * { animation-duration: .01s !important; animation-delay: 0s !important; }
 }
+.sp-pin { animation: sp-pin .8s ease-in-out infinite alternate; }
+@keyframes sp-pin { from { transform: translateY(0); } to { transform: translateY(-12px); } }
